@@ -1,20 +1,37 @@
 import { createTheme } from "@mantine/core";
 
 export const theme = createTheme({
-  primaryColor: "primary",
+  primaryColor: "burgundy",
 
   colors: {
-    primary: [
-      "#f1efff",
-      "#dfdcf7",
-      "#bcb7e6",
-      "#978fd6",
-      "#6e63c4",
-      "#6357c0",
-      "#594cbd",
-      "#493ea7",
-      "#403696",
-      "#352e86",
+    burgundy: [
+      "#fdf2f4",
+      "#f5d5da",
+      "#e8a8b2",
+      "#d97a89",
+      "#c94d61",
+      "#b32d44",
+      "#8b1a2f",
+      "#721527",
+      "#59101e",
+      "#400b16",
     ],
+    gold: [
+      "#fdf8e8",
+      "#f5ecc2",
+      "#e8d68a",
+      "#d4bc52",
+      "#c4a832",
+      "#b89a1e",
+      "#a68a15",
+      "#8a7210",
+      "#6e5a0c",
+      "#524308",
+    ],
+  },
+
+  fontFamily: "'Inter', sans-serif",
+  headings: {
+    fontFamily: "'Playfair Display', serif",
   },
 });

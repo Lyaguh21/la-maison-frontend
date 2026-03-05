@@ -1,6 +1,6 @@
-import { About } from "@/pages/About";
+import { Menu } from "@/pages/Menu";
 import { Error404 } from "@/pages/Errors/Error404";
-import { Main } from "@/pages/Main";
+import { Landing } from "@/pages/Landing";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { MainLayout } from "../layouts/MainLayout";
 
@@ -11,11 +11,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Main />,
+        element: <Landing />,
       },
       {
-        path: "/about",
-        element: <About />,
+        path: "/menu",
+        element: <Menu />,
       },
     ],
   },

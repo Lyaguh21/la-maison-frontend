@@ -1,9 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { listenerMiddleware, registerListeners } from "./listenersMiddleware";
+import { authReducer } from "@/features/auth";
 
 export const store = configureStore({
   //? Подключение слайсов
-  reducer: {},
+  reducer: {
+    auth: authReducer,
+  },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),
