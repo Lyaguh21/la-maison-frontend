@@ -8,10 +8,11 @@ import {
   Container,
   UnstyledButton,
   Box,
+  Stack,
 } from "@mantine/core";
 import { IconUser, IconLogout } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "@/shared/lib";
-import ScrollProgressBar from "./ScrollProgressBar";
+import ScrollProgressBar from "./components/ScrollProgressBar";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "@/entities/user/model/userSelectors";
 import { userLogout } from "@/entities/user";
@@ -23,6 +24,13 @@ export default function Header() {
 
   const [logout] = useLogoutMutation();
   const user = useAppSelector(selectUser);
+
+  const links = [
+    { label: "Главная", path: "/" },
+    { label: "Меню", path: "/menu" },
+    { label: "Бронирование", path: "/booking" },
+    { label: "Панель работника", path: "/employee", auth: true },
+  ];
 
   return (
     <Box
@@ -41,39 +49,37 @@ export default function Header() {
         <Group justify="space-between" align="center">
           <Image src="/icons/MiniLogo.png" w={200} />
 
-          <Group gap={40} justify="center">
-            <UnstyledButton>
-              <Text
-                fz="sm"
-                fw={500}
-                c="dark.7"
-                style={{ letterSpacing: "2px", textTransform: "uppercase" }}
-              >
-                Меню
-              </Text>
-            </UnstyledButton>
-            <UnstyledButton>
-              <Text
-                fz="sm"
-                fw={500}
-                c="dark.7"
-                style={{ letterSpacing: "2px", textTransform: "uppercase" }}
-              >
-                Бронирование
-              </Text>
-            </UnstyledButton>
-            {user.role !== "CUSTOMER" && (
-              <UnstyledButton>
-                <Text
-                  fz="sm"
-                  fw={500}
-                  c="dark.7"
-                  style={{ letterSpacing: "2px", textTransform: "uppercase" }}
+          <Group gap={30} justify="center">
+            {links
+              .slice(0, user.role === "CUSTOMER" ? 3 : links.length)
+              .map((link) => (
+                <UnstyledButton
+                  key={link.path}
+                  onClick={() => navigate(link.path)}
                 >
-                  Панель работника
-                </Text>
-              </UnstyledButton>
-            )}
+                  <Stack gap={2}>
+                    <Text
+                      fz="sm"
+                      fw={500}
+                      c="dark.7"
+                      style={{
+                        letterSpacing: "2px",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {link.label}
+                    </Text>
+                    <Box
+                      h={2}
+                      w="100%"
+                      bg="burgundy.6"
+                      style={{
+                        opacity: link.path === window.location.pathname ? 1 : 0,
+                      }}
+                    />
+                  </Stack>
+                </UnstyledButton>
+              ))}
           </Group>
           <Box w={200}>
             {user?.email ? (
@@ -90,10 +96,17 @@ export default function Header() {
                     </Group>
                   </UnstyledButton>
                 </Menu.Target>
-                <Menu.Dropdown>
+                <Menu.Dropdown w={200}>
                   <Menu.Item
-                    leftSection={<IconLogout size={14} />}
+                    leftSection={<IconUser size={18} />}
+                    onClick={() => navigate("/profile")}
+                  >
+                    Профиль
+                  </Menu.Item>
+                  <Menu.Item
+                    leftSection={<IconLogout size={18} />}
                     onClick={() => dispatch(userLogout(), logout())}
+                    c="red.6"
                   >
                     Выйти
                   </Menu.Item>

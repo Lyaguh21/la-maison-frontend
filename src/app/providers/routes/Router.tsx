@@ -3,17 +3,10 @@ import { Error404 } from "@/pages/errors/Error404";
 import { Login, Register } from "@/pages/auth";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Landing } from "@/pages/landing";
+import { Booking } from "@/pages/booking";
+import LandingLayout from "../layouts/Landing.layout";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Landing />,
-  },
-  {
-    path: "/menu",
-    element: <Menu />,
-  },
-
   {
     path: "/login",
     element: <Login />,
@@ -21,6 +14,24 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/",
+    element: <LandingLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Landing />,
+      },
+      {
+        path: "/menu",
+        element: <Menu />,
+      },
+      {
+        path: "/booking",
+        element: <Booking />,
+      },
+    ],
   },
   {
     path: "*",

@@ -14,7 +14,7 @@ import {
   IconBrandVk,
 } from "@tabler/icons-react";
 
-export default function FooterSection() {
+export default function Footer() {
   return (
     <Box bg="dark.9" py={60}>
       <Container size="lg">
