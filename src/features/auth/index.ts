@@ -1,1 +1,6 @@
-export { default as authReducer, login, logout } from "./model/authSlice";
+export {
+  useRegisterMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useStatusQuery,
+} from "./model/authApi";

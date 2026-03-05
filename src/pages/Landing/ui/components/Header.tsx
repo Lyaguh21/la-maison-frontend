@@ -11,12 +11,18 @@ import {
 } from "@mantine/core";
 import { IconUser, IconLogout } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "@/shared/lib";
-import { logout } from "@/features/auth";
 import ScrollProgressBar from "./ScrollProgressBar";
+import { useNavigate } from "react-router-dom";
+import { selectUser } from "@/entities/user/model/userSelectors";
+import { userLogout } from "@/entities/user";
+import { useLogoutMutation } from "@/features/auth";
 
 export default function Header() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+
+  const [logout] = useLogoutMutation();
+  const user = useAppSelector(selectUser);
 
   return (
     <Box
@@ -38,7 +44,7 @@ export default function Header() {
           <Group gap={40} justify="center">
             <UnstyledButton>
               <Text
-                fz="md"
+                fz="sm"
                 fw={500}
                 c="dark.7"
                 style={{ letterSpacing: "2px", textTransform: "uppercase" }}
@@ -48,7 +54,7 @@ export default function Header() {
             </UnstyledButton>
             <UnstyledButton>
               <Text
-                fz="md"
+                fz="sm"
                 fw={500}
                 c="dark.7"
                 style={{ letterSpacing: "2px", textTransform: "uppercase" }}
@@ -56,10 +62,21 @@ export default function Header() {
                 Бронирование
               </Text>
             </UnstyledButton>
+            {user.role !== "CUSTOMER" && (
+              <UnstyledButton>
+                <Text
+                  fz="sm"
+                  fw={500}
+                  c="dark.7"
+                  style={{ letterSpacing: "2px", textTransform: "uppercase" }}
+                >
+                  Панель работника
+                </Text>
+              </UnstyledButton>
+            )}
           </Group>
-
           <Box w={200}>
-            {isAuthenticated && user ? (
+            {user?.email ? (
               <Menu shadow="md">
                 <Menu.Target>
                   <UnstyledButton>
@@ -67,7 +84,7 @@ export default function Header() {
                       <Avatar radius="xl" size="sm" color="burgundy.6">
                         <IconUser size={16} />
                       </Avatar>
-                      <Text fz="sm" c="dark.6">
+                      <Text fz="sm" fw={500} c="dark.6">
                         {user?.email}
                       </Text>
                     </Group>
@@ -76,7 +93,7 @@ export default function Header() {
                 <Menu.Dropdown>
                   <Menu.Item
                     leftSection={<IconLogout size={14} />}
-                    onClick={() => dispatch(logout())}
+                    onClick={() => dispatch(userLogout(), logout())}
                   >
                     Выйти
                   </Menu.Item>
@@ -89,6 +106,7 @@ export default function Header() {
                 radius={0}
                 size="sm"
                 style={{ letterSpacing: "1px", textTransform: "uppercase" }}
+                onClick={() => navigate("/login")}
               >
                 Войти
               </Button>

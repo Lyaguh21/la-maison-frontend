@@ -1,23 +1,26 @@
-import { Menu } from "@/pages/Menu";
-import { Error404 } from "@/pages/Errors/Error404";
-import { Landing } from "@/pages/Landing";
+import { Menu } from "@/pages/menu";
+import { Error404 } from "@/pages/errors/Error404";
+import { Login, Register } from "@/pages/auth";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { MainLayout } from "../layouts/MainLayout";
+import { Landing } from "@/pages/landing";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
-    children: [
-      {
-        path: "/",
-        element: <Landing />,
-      },
-      {
-        path: "/menu",
-        element: <Menu />,
-      },
-    ],
+    element: <Landing />,
+  },
+  {
+    path: "/menu",
+    element: <Menu />,
+  },
+
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "*",

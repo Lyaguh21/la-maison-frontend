@@ -1,20 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { listenerMiddleware, registerListeners } from "./listenersMiddleware";
-import { authReducer } from "@/features/auth";
+
+import { baseApi } from "@/shared/api";
+import { userSlice } from "@/entities/user/model/userSlice";
 
 export const store = configureStore({
   //? Подключение слайсов
   reducer: {
-    auth: authReducer,
+    user: userSlice.reducer,
+
+    [baseApi.reducerPath]: baseApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
-
-  //? Предзагруженные состояния
-  preloadedState: {
-    // settings: loadSettingsState(),
-  },
+    getDefaultMiddleware().prepend(
+      baseApi.middleware,
+      listenerMiddleware.middleware,
+    ),
 });
 
 export type _RootState = ReturnType<typeof store.getState>;
