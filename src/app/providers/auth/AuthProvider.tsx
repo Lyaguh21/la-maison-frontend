@@ -1,5 +1,6 @@
+import { useStatusQuery } from "@/entities/auth";
 import { setUser, userLogout } from "@/entities/user";
-import { useStatusQuery } from "@/features/auth";
+
 import { useAppDispatch } from "@/shared/lib";
 import { LoadingOverlay } from "@mantine/core";
 import { useEffect } from "react";

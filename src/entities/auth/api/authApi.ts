@@ -1,5 +1,9 @@
 import { baseApi } from "@/shared/api";
-import { ILoginRequest, IRegisterRequest, IStatusResponse } from "./type";
+import {
+  ILoginRequest,
+  IRegisterRequest,
+  IStatusResponse,
+} from "../model/type";
 import { IUserState } from "@/entities/user";
 
 export const authApi = baseApi.injectEndpoints({

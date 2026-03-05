@@ -36,7 +36,7 @@ export default function HeroSection() {
               La Maison
             </Text>
 
-            <Box w={60} h={1} bg="gold.4" />
+            <Box w={60} h={2} bg="gold.4" />
 
             <Text
               fz="lg"

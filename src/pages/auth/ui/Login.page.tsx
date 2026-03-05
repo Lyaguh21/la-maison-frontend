@@ -1,8 +1,8 @@
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "@/entities/user";
-import { useLoginMutation } from "@/features/auth";
-import { ILoginRequest } from "@/features/auth/model/type";
+
+import { ILoginRequest } from "@/entities/auth/model/type";
 import { useAppDispatch, useNotifications } from "@/shared/lib";
 import {
   Box,
@@ -16,6 +16,7 @@ import {
   LoadingOverlay,
   Paper,
 } from "@mantine/core";
+import { useLoginMutation } from "@/entities/auth";
 
 export default function Login() {
   const navigate = useNavigate();

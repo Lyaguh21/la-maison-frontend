@@ -1,5 +1,6 @@
+import { useRegisterMutation } from "@/entities/auth";
 import { setUser } from "@/entities/user/model/userSlice";
-import { useRegisterMutation } from "@/features/auth";
+
 import { useAppDispatch, useNotifications } from "@/shared/lib";
 import {
   Box,

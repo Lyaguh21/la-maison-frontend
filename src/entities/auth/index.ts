@@ -3,4 +3,4 @@ export {
   useLoginMutation,
   useLogoutMutation,
   useStatusQuery,
-} from "./model/authApi";
+} from "./api/authApi";

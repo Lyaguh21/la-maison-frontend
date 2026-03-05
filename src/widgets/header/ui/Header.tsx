@@ -16,7 +16,8 @@ import ScrollProgressBar from "./components/ScrollProgressBar";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "@/entities/user/model/userSelectors";
 import { userLogout } from "@/entities/user";
-import { useLogoutMutation } from "@/features/auth";
+import { useLogoutMutation } from "@/entities/auth";
+import classes from "../classes/Header.module.css";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function Header() {
         <Group justify="space-between" align="center">
           <Image src="/icons/MiniLogo.png" w={200} />
 
-          <Group gap={30} justify="center">
+          <Group gap={30} justify="center" className={classes.headerLinks}>
             {links
               .slice(0, user.role === "CUSTOMER" ? 3 : links.length)
               .map((link) => (
