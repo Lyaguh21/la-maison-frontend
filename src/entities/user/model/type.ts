@@ -15,3 +15,10 @@ export interface IUserState {
   updatedAt?: Date;
   userAllergens?: Allergen[];
 }
+
+export interface IUpdateProfileData extends Pick<
+  IUserState,
+  "email" | "name" | "phone"
+> {
+  userAllergenIds: number[];
+}

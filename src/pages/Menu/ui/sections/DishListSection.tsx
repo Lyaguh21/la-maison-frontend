@@ -25,7 +25,7 @@ export default function DishListSection() {
   return (
     <Stack flex={1}>
       <Group gap="md">
-        <Paper withBorder p="sm" py={"xs"} radius="md">
+        <Paper withBorder p="sm" py={"xs"} radius="sm">
           <Text c={theme.colors.gray[6]}>
             Всего страниц:{" "}
             <Text fw={700} span c={theme.primaryColor}>
@@ -33,7 +33,7 @@ export default function DishListSection() {
             </Text>
           </Text>
         </Paper>
-        <Paper withBorder p="sm" py={"xs"} radius="md">
+        <Paper withBorder p="sm" py={"xs"} radius="sm">
           <Text c={theme.colors.gray[6]}>
             Всего блюд:{" "}
             <Text fw={700} span c={theme.primaryColor}>

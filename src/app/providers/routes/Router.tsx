@@ -4,6 +4,7 @@ import { Login, Register } from "@/pages/auth";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Landing } from "@/pages/landing";
 import { Booking } from "@/pages/booking";
+import { Profile } from "@/pages/profile";
 import LandingLayout from "../layouts/Landing.layout";
 
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/booking",
         element: <Booking />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

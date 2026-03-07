@@ -71,7 +71,7 @@ export default function dishCard({ dish }: { dish: IDishCard }) {
 
           <Group gap="0px" align="center">
             <Text fz="md" fw={700} c="burgundy.6">
-              {dish.price} Руб
+              {dish.price} ₽
             </Text>
           </Group>
         </Flex>
