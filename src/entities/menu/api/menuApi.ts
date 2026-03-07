@@ -3,6 +3,7 @@ import {
   IDishesListResponse,
   IMenuCategory,
   IMenuQueryParams,
+  Ingredient,
 } from "../model/type";
 
 export const authApi = baseApi.injectEndpoints({
@@ -10,6 +11,20 @@ export const authApi = baseApi.injectEndpoints({
     menuCategories: build.query<IMenuCategory[], void>({
       query: () => "/menu/categories",
       providesTags: [{ type: "MenuCategory" }],
+    }),
+
+    ingredients: build.query<Ingredient[], void>({
+      query: () => "/menu/ingredients",
+      providesTags: (result) =>
+        Array.isArray(result)
+          ? [
+              { type: "Ingredients" as const, id: "LIST" },
+              ...result?.map((ingredient) => ({
+                type: "Ingredients" as const,
+                id: ingredient.id,
+              })),
+            ]
+          : [{ type: "Ingredients" as const, id: "LIST" }],
     }),
 
     menu: build.query<IDishesListResponse, IMenuQueryParams>({
@@ -31,4 +46,5 @@ export const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useMenuCategoriesQuery, useMenuQuery } = authApi;
+export const { useMenuCategoriesQuery, useMenuQuery, useIngredientsQuery } =
+  authApi;

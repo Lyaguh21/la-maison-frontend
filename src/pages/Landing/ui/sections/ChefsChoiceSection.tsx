@@ -14,7 +14,7 @@ const dishes = [
     id: 1,
     name: "Утиное конфи",
     description: "Томлёная утиная ножка с гарниром из картофеля сарладез",
-    price: "2 400 ₽",
+    price: "2 400",
     photo:
       "https://cdn.food.ru/unsigned/fit/640/480/ce/0/czM6Ly9tZWRpYS9waWN0dXJlcy8yMDIzMTIxMC9YWXNBSm0uanBlZw.jpg",
     dishIngredients: [
@@ -27,7 +27,7 @@ const dishes = [
     id: 2,
     name: "Буйабес",
     description: "Классический марсельский рыбный суп с шафраном и руем",
-    price: "1 800 ₽",
+    price: "1 800",
     photo:
       "https://img.inmyroom.ru/inmyroom/thumb/1240x796/jpg:60/uploads/food_recipe/teaser/ff/ff0a/jpg_2000_ff0a53d4-732a-4fda-9747-69127e54869b.jpg?sign=2e94776ef983dc79d423dfe0fcbf5b3f940146e825d352b27efd5c74154d370e",
     dishIngredients: [
@@ -40,7 +40,7 @@ const dishes = [
     id: 3,
     name: "Тартар из говядины",
     description: "Рубленая говядина с каперсами, корнишонами и желтком",
-    price: "1 600 ₽",
+    price: "1 600",
     photo:
       "https://cdnn21.img.ria.ru/images/07e9/02/0a/1998460908_3:0:1454:816_1920x1080_80_0_0_ab44eda5cf8db7bb737989cea7dd9f84.jpg",
     dishIngredients: [
@@ -54,7 +54,7 @@ const dishes = [
     id: 4,
     name: "Крем-брюле",
     description: "Классический французский десерт с карамельной корочкой",
-    price: "800 ₽",
+    price: "800",
     photo:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/2014_0531_Crème_brûlée_Doi_Mae_Salong_%28cropped%29.jpg/1280px-2014_0531_Crème_brûlée_Doi_Mae_Salong_%28cropped%29.jpg",
   },
