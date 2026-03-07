@@ -1,8 +1,20 @@
 import { IDishCard } from "@/entities/menu";
-import { Card, Text, Image, useMantineTheme, Badge, Flex } from "@mantine/core";
+import {
+  Card,
+  Text,
+  Image,
+  useMantineTheme,
+  Badge,
+  Flex,
+  Group,
+  AspectRatio,
+} from "@mantine/core";
+import { useSearchParams } from "react-router-dom";
 
 export default function dishCard({ dish }: { dish: IDishCard }) {
   const theme = useMantineTheme();
+  const [searchParams] = useSearchParams();
+  const visible = searchParams.get("visible") || "grid";
 
   return (
     <Card
@@ -12,18 +24,36 @@ export default function dishCard({ dish }: { dish: IDishCard }) {
       bg="transparent"
       style={{ boxShadow: "4px 4px 8px 0px rgba(0, 0, 0, 0.1)" }}
     >
-      <Flex direction="column" flex={1} gap="sm">
-        <Image
-          bg={theme.colors.burgundy[7]}
-          src={dish.photo}
-          alt={dish.name}
-          h={280}
-          fit="cover"
-        />
+      <Flex
+        direction={
+          visible === "grid" ? "column" : { base: "column", sm: "row" }
+        }
+        flex={1}
+        gap="sm"
+      >
+        <AspectRatio ratio={1 / 1}>
+          <Image
+            bg={theme.colors.burgundy[7]}
+            src={dish.photo}
+            h={280}
+            fit="cover"
+          />
+        </AspectRatio>
 
-        <Flex direction="column" justify="space-between" flex={1} gap={4} p={8}>
+        <Flex
+          direction={"column"}
+          justify="space-between"
+          flex={1}
+          gap={4}
+          p={8}
+        >
           <div>
-            <Text ff="'Playfair Display', serif" fw={500} fz="lg" c="dark.8">
+            <Text
+              ff="Playfair Display"
+              fw={600}
+              fz={visible === "grid" ? "xl" : { base: "xl", sm: "32" }}
+              c="dark.8"
+            >
               {dish.name}
             </Text>
             <Text fz="sm" c="dark.4" lh={1.6}>
@@ -39,9 +69,11 @@ export default function dishCard({ dish }: { dish: IDishCard }) {
             </Flex>
           </div>
 
-          <Text fz="md" fw={600} c="burgundy.6">
-            {dish.price}
-          </Text>
+          <Group gap="0px" align="center">
+            <Text fz="md" fw={700} c="burgundy.6">
+              {dish.price} Руб
+            </Text>
+          </Group>
         </Flex>
       </Flex>
     </Card>

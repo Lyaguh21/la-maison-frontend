@@ -1,3 +1,11 @@
+export interface IMenuQueryParams {
+  search?: string;
+  sort?: string;
+  categoryId?: number;
+  page?: number;
+  limit?: number;
+}
+
 export interface IMenuCategory {
   id: number;
   name: string;
@@ -17,4 +25,14 @@ export interface IDishCard {
   dishIngredients?: Ingredient[];
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface IDishesListResponse {
+  data: IDishCard[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+  };
 }

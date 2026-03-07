@@ -1,5 +1,9 @@
 import { baseApi } from "@/shared/api";
-import { IDishCard, IMenuCategory } from "../model/type";
+import {
+  IDishesListResponse,
+  IMenuCategory,
+  IMenuQueryParams,
+} from "../model/type";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -8,8 +12,11 @@ export const authApi = baseApi.injectEndpoints({
       providesTags: [{ type: "MenuCategory" }],
     }),
 
-    menu: build.query<IDishCard[], void>({
-      query: () => "/menu/dishes",
+    menu: build.query<IDishesListResponse, IMenuQueryParams>({
+      query: (params) => ({
+        url: "/menu/dishes",
+        params,
+      }),
       providesTags: (result) =>
         Array.isArray(result)
           ? [
