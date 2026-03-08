@@ -11,6 +11,6 @@ export function useMenuFilters(): IMenuQueryParams {
       ? Number(searchParams.get("categoryId"))
       : undefined,
     page: searchParams.get("page") ? Number(searchParams.get("page")) : 1,
-    limit: searchParams.get("limit") ? Number(searchParams.get("limit")) : 10,
+    limit: searchParams.get("limit") ? Number(searchParams.get("limit")) : 12,
   };
 }

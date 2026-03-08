@@ -3,11 +3,11 @@ import { setUser, userLogout } from "@/entities/user";
 
 import { useAppDispatch } from "@/shared/lib";
 import { LoadingOverlay } from "@mantine/core";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
-
+  const [visibleLoading, setVisibleLoading] = useState(true);
   const { data, isLoading, isError } = useStatusQuery();
 
   useEffect(() => {
@@ -20,14 +20,16 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     }
   }, [data, isError]);
 
-  if (isLoading) {
-    return (
-      <>
-        <LoadingOverlay visible={isLoading} />
-        {children}
-      </>
-    );
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      setVisibleLoading(isLoading);
+    }, 500);
+  }, [isLoading]);
 
-  return children;
+  return (
+    <>
+      <LoadingOverlay visible={visibleLoading} pos="fixed" />
+      {children}
+    </>
+  );
 };

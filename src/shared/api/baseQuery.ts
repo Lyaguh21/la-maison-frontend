@@ -4,7 +4,7 @@ import type {
   FetchArgs,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
-import { userLogout } from "@/entities/user";
+import { userLogout } from "@/entities/user/model/userSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:3000",

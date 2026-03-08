@@ -1,6 +1,7 @@
 import { selectUser } from "@/entities/user/model/userSelectors";
 import { useAppSelector } from "@/shared/lib";
-import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function RoleGuard({
   roles,
@@ -9,11 +10,16 @@ export function RoleGuard({
   roles: string[];
   children: React.ReactNode;
 }) {
+  const navigate = useNavigate();
   const user = useAppSelector(selectUser);
 
-  if (!roles.includes(user.role)) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    if (user.id === undefined) return;
+
+    if (!roles.includes(user.role)) {
+      navigate("/");
+    }
+  }, [user.id, user.role]);
 
   return children;
 }

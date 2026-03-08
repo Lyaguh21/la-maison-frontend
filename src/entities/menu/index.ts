@@ -1,4 +1,8 @@
-export { useMenuCategoriesQuery, useMenuQuery } from "./api/menuApi";
+export {
+  useMenuCategoriesQuery,
+  useMenuQuery,
+  useIngredientsQuery,
+} from "./api/menuApi";
 export type {
   IMenuCategory,
   IDishCard,

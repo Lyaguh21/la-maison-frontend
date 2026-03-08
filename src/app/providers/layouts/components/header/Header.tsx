@@ -9,8 +9,9 @@ import {
   UnstyledButton,
   Box,
   Stack,
+  useMantineColorScheme,
 } from "@mantine/core";
-import { IconUser, IconLogout } from "@tabler/icons-react";
+import { IconUser, IconLogout, IconSun, IconMoon } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "@/shared/lib";
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +30,7 @@ const linkEmployee = [
 ];
 
 export default function Header() {
+  const { setColorScheme, colorScheme } = useMantineColorScheme();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -117,6 +119,20 @@ export default function Header() {
                     onClick={() => navigate("/profile")}
                   >
                     Профиль
+                  </Menu.Item>
+                  <Menu.Item
+                    leftSection={
+                      colorScheme === "light" ? (
+                        <IconMoon size={18} />
+                      ) : (
+                        <IconSun size={18} />
+                      )
+                    }
+                    onClick={() =>
+                      setColorScheme(colorScheme === "light" ? "dark" : "light")
+                    }
+                  >
+                    {colorScheme === "light" ? "Темная тема" : "Светлая тема"}
                   </Menu.Item>
                   <Menu.Item
                     leftSection={<IconLogout size={18} />}

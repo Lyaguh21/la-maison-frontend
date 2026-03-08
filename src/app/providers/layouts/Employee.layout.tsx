@@ -1,4 +1,4 @@
-import { AppShell, AppShellNavbar, Burger } from "@mantine/core";
+import { AppShell, AppShellNavbar, Burger, Flex, Image } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
@@ -10,12 +10,13 @@ export default function EmployeeLayout() {
   return (
     <AppShell
       header={{ height: 60, collapsed: !isMobile }}
-      navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
+      navbar={{ width: 250, breakpoint: "sm", collapsed: { mobile: !opened } }}
     >
       <AppShell.Header>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-
-        <div>Logo</div>
+        <Flex align="center" justify="space-between" h="100%" px="md">
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="md" />
+          <Image src="/icons/MiniLogo.png" w={150} />
+        </Flex>
       </AppShell.Header>
       <AppShellNavbar>
         <Navbar />

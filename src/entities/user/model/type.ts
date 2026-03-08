@@ -6,7 +6,7 @@ export interface Allergen {
 }
 
 export interface IUserState {
-  userId?: number;
+  id?: number;
   name?: string;
   email?: string;
   phone?: string;
@@ -21,4 +21,26 @@ export interface IUpdateProfileData extends Pick<
   "email" | "name" | "phone"
 > {
   userAllergenIds: number[];
+}
+
+export interface IUsersListQuery {
+  search?: string;
+  sort?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface IUsersListResponse {
+  data: IUserState[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+  };
+}
+
+export interface IUpdateRoleUser {
+  userId: number;
+  role: UserRole;
 }

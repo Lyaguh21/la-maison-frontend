@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { IUserState } from "./type";
 
 const initialState: IUserState = {
-  userId: undefined,
+  id: undefined,
   name: undefined,
   email: undefined,
   phone: undefined,
@@ -17,7 +17,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.userId = action.payload.userId;
+      state.id = action.payload.id;
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.phone = action.payload.phone;
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
     },
 
     userLogout: (state) => {
-      state.userId = undefined;
+      state.id = undefined;
       state.name = undefined;
       state.email = undefined;
       state.phone = undefined;

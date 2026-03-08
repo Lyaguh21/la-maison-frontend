@@ -1,5 +1,5 @@
 import { useMenuCategoriesQuery } from "@/entities/menu";
-import { Fieldset, Stack, Select, Input, Box } from "@mantine/core";
+import { Fieldset, Stack, Select, Input, Box, Divider } from "@mantine/core";
 import { useThrottledCallback } from "@mantine/hooks";
 import { useState, useEffect } from "react";
 import {
@@ -104,7 +104,9 @@ export default function FiltersSection() {
             updateParams("sort", value, searchParams, setSearchParams)
           }
         />
-        <Box h={0.5} w="80%" bg="gray.3" />
+
+        <Divider size="sm" w="100%" />
+
         <Select
           w="100%"
           leftSection={<IconListDetails />}

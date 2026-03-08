@@ -1,2 +1,8 @@
 export { userLogout, setUser, userReducer, userSlice } from "./model/userSlice";
-export type { IUserState } from "./model/type";
+export {
+  useGetProfileQuery,
+  useGetUsersQuery,
+  useUpdateProfileMutation,
+  useUpdateRoleUserMutation,
+} from "./api/userApi";
+export type { IUserState, UserRole } from "./model/type";
