@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { selectUser } from "@/entities/user/model/userSelectors";
 import { userLogout } from "@/entities/user";
 import { useLogoutMutation } from "@/entities/auth";
-import classes from "../classes/Header.module.css";
+import classes from "./classes/Header.module.css";
 
 const linkEmployee = [
   {
@@ -59,6 +59,7 @@ export default function Header() {
       }}
     >
       <ScrollProgressBar />
+
       <Container size="xl">
         <Group justify="space-between" align="center">
           <Image src="/icons/MiniLogo.png" w={200} />

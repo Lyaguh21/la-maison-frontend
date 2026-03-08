@@ -1,6 +1,7 @@
 import { AppShell, AppShellNavbar, Burger } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Outlet } from "react-router-dom";
+import Navbar from "./components/navbar/Navbar";
 
 export default function EmployeeLayout() {
   const [opened, { toggle }] = useDisclosure();
@@ -16,7 +17,9 @@ export default function EmployeeLayout() {
 
         <div>Logo</div>
       </AppShell.Header>
-      <AppShellNavbar>Navbar</AppShellNavbar>
+      <AppShellNavbar>
+        <Navbar />
+      </AppShellNavbar>
 
       <AppShell.Main>
         <Outlet />
