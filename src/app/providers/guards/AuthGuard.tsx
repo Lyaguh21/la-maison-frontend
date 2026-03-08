@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/shared/lib";
 import { LoadingOverlay } from "@mantine/core";
 import { useEffect } from "react";
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
 
   const { data, isLoading, isError } = useStatusQuery();

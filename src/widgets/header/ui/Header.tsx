@@ -19,6 +19,15 @@ import { userLogout } from "@/entities/user";
 import { useLogoutMutation } from "@/entities/auth";
 import classes from "../classes/Header.module.css";
 
+const linkEmployee = [
+  {
+    role: "ADMIN",
+    link: "/employee/dashboards",
+  },
+  { role: "WAITER", link: "/employee/floor-scheme" },
+  { role: "COOK", link: "/employee/orders" },
+];
+
 export default function Header() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -30,7 +39,11 @@ export default function Header() {
     { label: "Главная", path: "/" },
     { label: "Меню", path: "/menu" },
     { label: "Бронирование", path: "/booking" },
-    { label: "Панель работника", path: "/employee", auth: true },
+    {
+      label: "Панель работника",
+      path: linkEmployee.find((link) => link.role === user?.role)?.link,
+      auth: true,
+    },
   ];
 
   return (
@@ -56,7 +69,7 @@ export default function Header() {
               .map((link) => (
                 <UnstyledButton
                   key={link.path}
-                  onClick={() => navigate(link.path)}
+                  onClick={() => navigate(link.path!)}
                 >
                   <Stack gap={2}>
                     <Text

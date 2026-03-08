@@ -21,10 +21,9 @@ const sortData = [
 ];
 
 const limitData = [
-  { value: "2", label: "2" },
   { value: "5", label: "5" },
-  { value: "10", label: "10" },
-  { value: "20", label: "20" },
+  { value: "12", label: "12" },
+  { value: "24", label: "24" },
 ];
 
 const visibleData = [
@@ -42,7 +41,7 @@ export default function FiltersSection() {
   const sort = searchParams.get("sort") || "asc";
   const categoryId = searchParams.get("categoryId");
   const visible = searchParams.get("visible") || "grid";
-  const limit = searchParams.get("limit") || "10";
+  const limit = searchParams.get("limit") || "12";
 
   const [searchInput, setSearchInput] = useState(
     searchParams.get("search") || "",
@@ -80,6 +79,7 @@ export default function FiltersSection() {
           leftSection={<IconFilter />}
           label="Фильтр по категории"
           placeholder="Все"
+          clearable
           data={categories?.map((category) => ({
             value: String(category.id),
             label: category.name,
@@ -111,7 +111,7 @@ export default function FiltersSection() {
           label="Количество карточек на странице"
           placeholder="Кол-во карточек"
           data={limitData}
-          defaultValue={"10"}
+          defaultValue={"12"}
           value={limit}
           onChange={(value) =>
             updateParams("limit", value, searchParams, setSearchParams)
