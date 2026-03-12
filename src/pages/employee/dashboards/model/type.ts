@@ -16,3 +16,9 @@ export interface IWaitersProcessedStats {
 export interface IMetricValueResponse {
   value: number;
 }
+
+export interface IAverageVisitDurationResponse {
+  valueMinutes: number;
+}
+
+export type IDashboardWindow = "day" | "week" | "month" | "year" | "all";

@@ -1,5 +1,7 @@
 import { baseApi } from "@/shared/api";
 import {
+  IDashboardWindow,
+  IAverageVisitDurationResponse,
   IMetricValueResponse,
   IReservations7DaysResponse,
   IRevenue7DaysResponse,
@@ -8,37 +10,73 @@ import {
 
 export const dashboardsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    revenue7days: build.query<IRevenue7DaysResponse[], void>({
-      query: () => "/dashboards/revenue/7-days",
+    revenue: build.query<IRevenue7DaysResponse[], IDashboardWindow | void>({
+      query: (window = "week") => ({
+        url: "/dashboards/revenue",
+        params: { window },
+      }),
       providesTags: [{ type: "Revenue", id: "LIST" }],
     }),
 
-    revenueToday: build.query<IMetricValueResponse, void>({
-      query: () => "/dashboards/revenue/today",
+    revenueTotal: build.query<IMetricValueResponse, IDashboardWindow | void>({
+      query: (window = "week") => ({
+        url: "/dashboards/revenue/total",
+        params: { window },
+      }),
       providesTags: [{ type: "Revenue", id: "TODAY" }],
     }),
 
-    reservations7days: build.query<IReservations7DaysResponse[], void>({
-      query: () => "/dashboards/reservations/7-days",
+    reservations: build.query<
+      IReservations7DaysResponse[],
+      IDashboardWindow | void
+    >({
+      query: (window = "week") => ({
+        url: "/dashboards/reservations",
+        params: { window },
+      }),
       providesTags: [{ type: "Reservations", id: "LIST" }],
     }),
 
-    reservationToday: build.query<IMetricValueResponse, void>({
-      query: () => "/dashboards/reservations/today",
+    reservationsTotal: build.query<
+      IMetricValueResponse,
+      IDashboardWindow | void
+    >({
+      query: (window = "week") => ({
+        url: "/dashboards/reservations/total",
+        params: { window },
+      }),
       providesTags: [{ type: "Reservations", id: "TODAY" }],
     }),
 
-    waitersProcessedStats7Days: build.query<IWaitersProcessedStats[], void>({
-      query: () => "/dashboards/waiter-processed/7-days",
+    waitersProcessedStats: build.query<
+      IWaitersProcessedStats[],
+      IDashboardWindow | void
+    >({
+      query: (window = "week") => ({
+        url: "/dashboards/waiter-processed",
+        params: { window },
+      }),
       providesTags: [{ type: "Waiters", id: "LIST" }],
+    }),
+
+    averageVisitDuration: build.query<
+      IAverageVisitDurationResponse,
+      IDashboardWindow | void
+    >({
+      query: (window = "week") => ({
+        url: "/dashboards/average-visit-duration",
+        params: { window },
+      }),
+      providesTags: [{ type: "Reservations", id: "AVG_DURATION" }],
     }),
   }),
 });
 
 export const {
-  useRevenue7daysQuery,
-  useRevenueTodayQuery,
-  useReservations7daysQuery,
-  useReservationTodayQuery,
-  useWaitersProcessedStats7DaysQuery,
+  useRevenueQuery,
+  useRevenueTotalQuery,
+  useReservationsQuery,
+  useReservationsTotalQuery,
+  useWaitersProcessedStatsQuery,
+  useAverageVisitDurationQuery,
 } = dashboardsApi;
