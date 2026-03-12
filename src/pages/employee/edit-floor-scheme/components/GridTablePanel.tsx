@@ -1,30 +1,36 @@
-import { ActionIcon, Box, Group, Paper, Image, Text } from "@mantine/core";
-import { GRID_COLS, CELL_SIZE, GRID_ROWS, PlacedTable } from "../model/type";
+import { ActionIcon, Box, Group, Paper, Text } from "@mantine/core";
+import {
+  GRID_COLS,
+  CELL_SIZE,
+  GRID_ROWS,
+  PlacedFloorItem,
+  isRotatedFloorItem,
+} from "../model/type";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { IconRotateClockwise, IconTrash } from "@tabler/icons-react";
 
-//* Перетаскиваемый размещённый стол
-function DraggablePlacedTable({
-  table,
+//* Перетаскиваемый размещённый объект
+function DraggablePlacedFloorItem({
+  item,
   isSelected,
   onSelect,
   onRotate,
   onDelete,
 }: {
-  table: PlacedTable;
+  item: PlacedFloorItem;
   isSelected: boolean;
   onSelect: () => void;
   onRotate: () => void;
   onDelete: () => void;
 }) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
-    id: `placed-${table.id}`,
-    data: { type: "placed", table },
+    id: `placed-${item.clientId}`,
+    data: { type: "placed", item },
   });
 
-  const isRotated = table.rotation === 90 || table.rotation === 270;
-  const displayW = isRotated ? table.height : table.width;
-  const displayH = isRotated ? table.width : table.height;
+  const isRotated = isRotatedFloorItem(item.rotation);
+  const displayW = isRotated ? item.height : item.width;
+  const displayH = isRotated ? item.width : item.height;
 
   return (
     <Box
@@ -37,8 +43,8 @@ function DraggablePlacedTable({
       }}
       style={{
         position: "absolute",
-        left: table.gridX * CELL_SIZE,
-        top: table.gridY * CELL_SIZE,
+        left: item.gridX * CELL_SIZE,
+        top: item.gridY * CELL_SIZE,
         width: displayW * CELL_SIZE,
         height: displayH * CELL_SIZE,
         opacity: isDragging ? 0.3 : 1,
@@ -51,8 +57,8 @@ function DraggablePlacedTable({
         style={{
           width: "100%",
           height: "100%",
-          borderRadius: table.templateId === "SIX" ? 64 : 4,
-          backgroundColor: table.color,
+          borderRadius: item.radius,
+          backgroundColor: item.color,
 
           border: isSelected ? "3px solid #fff" : "2px solid rgba(0,0,0,0.2)",
           boxShadow: isSelected
@@ -73,7 +79,9 @@ function DraggablePlacedTable({
           size="sm"
           style={{ zIndex: 1, textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}
         >
-          {table.number != null ? `№${table.number}` : table.label}
+          {item.type === "TABLE" && item.number != null
+            ? `№${item.number}`
+            : item.shortLabel}
         </Text>
 
         {isSelected && (
@@ -140,15 +148,13 @@ function GridCell({ col, row }: { col: number; row: number }) {
 export default function GridTablePanel({
   selectedId,
   setSelectedId,
-  gridRef,
-  tables,
+  items,
   handleRotate,
   handleDelete,
 }: {
   selectedId: string | null;
   setSelectedId: (el: string | null) => void;
-  tables: PlacedTable[];
-  gridRef: any;
+  items: PlacedFloorItem[];
   handleRotate: (id: string) => void;
   handleDelete: (id: string) => void;
 }) {
@@ -172,7 +178,6 @@ export default function GridTablePanel({
       onClick={() => setSelectedId(null)}
     >
       <Paper
-        ref={gridRef}
         shadow="lg"
         p={0}
         style={{
@@ -195,15 +200,15 @@ export default function GridTablePanel({
           {gridCells}
         </Box>
 
-        {/* Размещённые столы */}
-        {tables.map((table: PlacedTable) => (
-          <DraggablePlacedTable
-            key={table.id}
-            table={table}
-            isSelected={selectedId === table.id}
-            onSelect={() => setSelectedId(table.id)}
-            onRotate={() => handleRotate(table.id)}
-            onDelete={() => handleDelete(table.id)}
+        {/* Размещённые объекты */}
+        {items.map((item) => (
+          <DraggablePlacedFloorItem
+            key={item.clientId}
+            item={item}
+            isSelected={selectedId === item.clientId}
+            onSelect={() => setSelectedId(item.clientId)}
+            onRotate={() => handleRotate(item.clientId)}
+            onDelete={() => handleDelete(item.clientId)}
           />
         ))}
       </Paper>

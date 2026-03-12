@@ -1,14 +1,19 @@
 import { Box, Text } from "@mantine/core";
-import { CELL_SIZE, TableTemplate } from "../model/type";
+import {
+  CELL_SIZE,
+  FloorItemRotation,
+  FloorItemTemplate,
+  isRotatedFloorItem,
+} from "../model/type";
 
 export default function TableDragOverlay({
   template,
   rotation,
 }: {
-  template: TableTemplate;
-  rotation: 0 | 90 | 180 | 270;
+  template: FloorItemTemplate;
+  rotation: FloorItemRotation;
 }) {
-  const isRotated = rotation === 90 || rotation === 270;
+  const isRotated = isRotatedFloorItem(rotation);
   const w = isRotated ? template.height : template.width;
   const h = isRotated ? template.width : template.height;
 
@@ -19,15 +24,19 @@ export default function TableDragOverlay({
         height: h * CELL_SIZE,
         backgroundColor: template.color,
         opacity: 0.7,
-        borderRadius: 6,
+        borderRadius: template.radius,
         border: "2px dashed #fff",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         pointerEvents: "none",
       }}
     >
       <Text c="white" fw={700} size="sm">
+        {template.shortLabel}
+      </Text>
+      <Text c="rgba(255,255,255,0.9)" size="xs">
         {template.label}
       </Text>
     </Box>

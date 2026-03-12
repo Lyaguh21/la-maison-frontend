@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -8,33 +8,47 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { Box } from "@mantine/core";
+import { Box, Center, Loader, Text } from "@mantine/core";
+import { useNotifications } from "@/shared/lib";
 
 import SelectTablePanel from "./components/SelectTablePanel";
 import {
-  TableTemplate,
-  PlacedTable,
+  FloorItemTemplate,
+  PlacedFloorItem,
+  FloorItemRotation,
   GRID_COLS,
   GRID_ROWS,
-  TABLE_TEMPLATES,
+  FLOOR_ITEM_TEMPLATES,
+  getFloorItemTemplateById,
+  isRotatedFloorItem,
+  isTableFloorItem,
+  mapFloorItemDtoToPlacedItem,
+  mapPlacedItemToSyncDto,
 } from "./model/type";
 import GridTablePanel from "./components/GridTablePanel";
 import PropertyTablePanel from "./components/PropertyTablePanel";
 import TableDragOverlay from "./components/TableDragOverlay";
+import {
+  useGetFloorItemsQuery,
+  useSyncFloorItemsMutation,
+  useGetTablesQuery,
+} from "./model/api";
 
 export default function EditFloorScheme() {
-  const [tables, setTables] = useState<PlacedTable[]>([]);
+  const { showError, showSuccess } = useNotifications();
+  const { data, isLoading, isError } = useGetFloorItemsQuery();
+  const { data: existingTables } = useGetTablesQuery();
+  const [syncFloorItems, { isLoading: isSaving }] = useSyncFloorItemsMutation();
+
+  const [items, setItems] = useState<PlacedFloorItem[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [dragData, setDragData] = useState<{
     type: "template" | "placed";
-    template: TableTemplate;
-    rotation: 0 | 90 | 180 | 270;
-    offsetX?: number;
-    offsetY?: number;
+    template: FloorItemTemplate;
+    rotation: FloorItemRotation;
   } | null>(null);
 
   const idCounter = useRef(0);
-  const gridRef = useRef<HTMLDivElement>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -42,7 +56,25 @@ export default function EditFloorScheme() {
     }),
   );
 
-  const selectedTable = tables.find((t) => t.id === selectedId) ?? null;
+  const selectedItem =
+    items.find((item) => item.clientId === selectedId) ?? null;
+
+  const mapServerItems = useCallback((nextItems: typeof data) => {
+    idCounter.current = 0;
+
+    return (nextItems ?? []).map((item) =>
+      mapFloorItemDtoToPlacedItem(item, `floor-item-${++idCounter.current}`),
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    setItems(mapServerItems(data));
+    setSelectedId(null);
+  }, [data, mapServerItems]);
 
   //*  Проверка пересечений
   const checkOverlap = useCallback(
@@ -53,20 +85,20 @@ export default function EditFloorScheme() {
       h: number,
       excludeId?: string,
     ): boolean => {
-      return tables.some((t) => {
-        if (t.id === excludeId) return false;
-        const tRotated = t.rotation === 90 || t.rotation === 270;
-        const tw = tRotated ? t.height : t.width;
-        const th = tRotated ? t.width : t.height;
+      return items.some((item) => {
+        if (item.clientId === excludeId) return false;
+        const itemRotated = isRotatedFloorItem(item.rotation);
+        const tw = itemRotated ? item.height : item.width;
+        const th = itemRotated ? item.width : item.height;
         return (
-          x < t.gridX + tw &&
-          x + w > t.gridX &&
-          y < t.gridY + th &&
-          y + h > t.gridY
+          x < item.gridX + tw &&
+          x + w > item.gridX &&
+          y < item.gridY + th &&
+          y + h > item.gridY
         );
       });
     },
-    [tables],
+    [items],
   );
 
   //* Проверка границ
@@ -87,12 +119,11 @@ export default function EditFloorScheme() {
         rotation: 0,
       });
     } else if (data?.type === "placed") {
-      const table = data.table as PlacedTable;
-      const tpl = TABLE_TEMPLATES.find((t) => t.id === table.templateId)!;
+      const item = data.item as PlacedFloorItem;
       setDragData({
         type: "placed",
-        template: tpl,
-        rotation: table.rotation,
+        template: getFloorItemTemplateById(item.templateId),
+        rotation: item.rotation,
       });
     }
   };
@@ -114,7 +145,7 @@ export default function EditFloorScheme() {
     const col = cellData.col as number;
     const row = cellData.row as number;
 
-    const isRotated = dragData.rotation === 90 || dragData.rotation === 270;
+    const isRotated = isRotatedFloorItem(dragData.rotation);
     const w = isRotated ? dragData.template.height : dragData.template.width;
     const h = isRotated ? dragData.template.width : dragData.template.height;
 
@@ -136,39 +167,43 @@ export default function EditFloorScheme() {
     const activeData = active.data.current;
 
     if (activeData?.type === "template") {
-      // Новый стол
       if (checkOverlap(placeX, placeY, w, h)) {
         setDragData(null);
         return;
       }
 
-      const newId = `table-${++idCounter.current}`;
-      const newTable: PlacedTable = {
-        id: newId,
+      const newId = `floor-item-${++idCounter.current}`;
+      const newItem: PlacedFloorItem = {
+        clientId: newId,
         templateId: dragData.template.id,
+        type: dragData.template.type,
         label: dragData.template.label,
+        shortLabel: dragData.template.shortLabel,
         gridX: placeX,
         gridY: placeY,
         width: dragData.template.width,
         height: dragData.template.height,
         rotation: 0,
         color: dragData.template.color,
+        radius: dragData.template.radius,
         number: null,
-        photo: null,
+        tableType:
+          dragData.template.type === "TABLE" ? dragData.template.id : undefined,
       };
-      setTables((prev) => [...prev, newTable]);
+      setItems((prev) => [...prev, newItem]);
       setSelectedId(newId);
     } else if (activeData?.type === "placed") {
-      // Перемещение существующего
-      const table = activeData.table as PlacedTable;
-      if (checkOverlap(placeX, placeY, w, h, table.id)) {
+      const item = activeData.item as PlacedFloorItem;
+      if (checkOverlap(placeX, placeY, w, h, item.clientId)) {
         setDragData(null);
         return;
       }
 
-      setTables((prev) =>
+      setItems((prev) =>
         prev.map((t) =>
-          t.id === table.id ? { ...t, gridX: placeX, gridY: placeY } : t,
+          t.clientId === item.clientId
+            ? { ...t, gridX: placeX, gridY: placeY }
+            : t,
         ),
       );
     }
@@ -176,47 +211,91 @@ export default function EditFloorScheme() {
     setDragData(null);
   };
 
-  const handleSave = () => {
-    const payload = tables.map((t) => ({
-      id: t.id,
-      tableType: t.templateId,
-      x: t.gridX,
-      y: t.gridY,
-      width: t.width,
-      height: t.height,
-      rotation: t.rotation,
-      number: t.number,
-    }));
-    console.log("💾 Сохранение столов:", JSON.stringify(payload, null, 2));
-    console.log("Всего столов:", tables.length);
+  const handleSave = async () => {
+    const invalidTable = items.find(
+      (item) => isTableFloorItem(item) && item.number == null,
+    );
+
+    const tableNumbers = items
+      .filter(isTableFloorItem)
+      .map((item) => item.number)
+      .filter((value): value is number => value != null);
+
+    const hasDuplicateNumbers =
+      new Set(tableNumbers).size !== tableNumbers.length;
+
+    if (invalidTable) {
+      setSelectedId(invalidTable.clientId);
+      showError("Укажите номер для каждого стола перед сохранением.");
+      return;
+    }
+
+    if (hasDuplicateNumbers) {
+      showError("Номера столов должны быть уникальными.");
+      return;
+    }
+
+    // Проверяем уникальность номеров относительно всех столов в базе
+    if (existingTables && existingTables.length) {
+      const conflict = items
+        .filter(isTableFloorItem)
+        .find(
+          (item) =>
+            item.number != null &&
+            existingTables.some(
+              (t) => t.number === item.number && t.id !== item.tableId,
+            ),
+        );
+
+      if (conflict) {
+        setSelectedId(conflict.clientId);
+        showError(`Номер стола ${conflict.number} уже занят в базе.`);
+        return;
+      }
+    }
+
+    try {
+      const response = await syncFloorItems({
+        items: items.map(mapPlacedItemToSyncDto),
+      }).unwrap();
+
+      setItems(mapServerItems(response));
+      setSelectedId(null);
+      showSuccess("Схема зала сохранена.");
+    } catch (err: any) {
+      const msg =
+        err?.data?.message ??
+        err?.message ??
+        "Не удалось сохранить схему зала.";
+      showError(msg);
+    }
   };
 
-  //* Действия со столами
+  //* Действия с объектами
 
   const handleRotate = useCallback(
     (id: string) => {
-      setTables((prev) =>
-        prev.map((t) => {
-          if (t.id !== id) return t;
-          const nextRotation = ((t.rotation + 90) % 360) as 0 | 90 | 180 | 270;
-          const isNewRotated = nextRotation === 90 || nextRotation === 270;
-          const nw = isNewRotated ? t.height : t.width;
-          const nh = isNewRotated ? t.width : t.height;
+      setItems((prev) =>
+        prev.map((item) => {
+          if (item.clientId !== id) return item;
+          const nextRotation = ((item.rotation + 90) %
+            360) as FloorItemRotation;
+          const isNewRotated = isRotatedFloorItem(nextRotation);
+          const nw = isNewRotated ? item.height : item.width;
+          const nh = isNewRotated ? item.width : item.height;
 
-          // Корректируем позицию чтобы не вышел за границы
-          let nx = t.gridX;
-          let ny = t.gridY;
+          let nx = item.gridX;
+          let ny = item.gridY;
           if (nx + nw > GRID_COLS) nx = GRID_COLS - nw;
           if (ny + nh > GRID_ROWS) ny = GRID_ROWS - nh;
           if (nx < 0) nx = 0;
           if (ny < 0) ny = 0;
 
-          if (checkOverlap(nx, ny, nw, nh, t.id)) {
-            // Нельзя повернуть — пересечение
-            return t;
+          if (checkOverlap(nx, ny, nw, nh, item.clientId)) {
+            return item;
           }
 
-          return { ...t, rotation: nextRotation, gridX: nx, gridY: ny };
+          return { ...item, rotation: nextRotation, gridX: nx, gridY: ny };
         }),
       );
     },
@@ -224,15 +303,31 @@ export default function EditFloorScheme() {
   );
 
   const handleDelete = useCallback((id: string) => {
-    setTables((prev) => prev.filter((t) => t.id !== id));
+    setItems((prev) => prev.filter((t) => t.clientId !== id));
     setSelectedId((prev) => (prev === id ? null : prev));
   }, []);
 
   const handleSetNumber = useCallback((id: string, num: number | null) => {
-    setTables((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, number: num } : t)),
+    setItems((prev) =>
+      prev.map((t) => (t.clientId === id ? { ...t, number: num } : t)),
     );
   }, []);
+
+  if (isLoading) {
+    return (
+      <Center h="100vh">
+        <Loader color="blue" />
+      </Center>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Center h="100vh">
+        <Text c="red">Не удалось загрузить схему зала.</Text>
+      </Center>
+    );
+  }
 
   return (
     <DndContext
@@ -248,30 +343,24 @@ export default function EditFloorScheme() {
           backgroundColor: "#f8f9fa",
         }}
       >
-        {/* Шаблоны для перетаскивания */}
-        <SelectTablePanel handleSave={handleSave} />
+        <SelectTablePanel handleSave={handleSave} isSaving={isSaving} />
 
-        {/* Сетка столов */}
         <GridTablePanel
           selectedId={selectedId}
           setSelectedId={setSelectedId}
-          gridRef={gridRef}
-          tables={tables}
+          items={items}
           handleRotate={handleRotate}
           handleDelete={handleDelete}
         />
 
-        {/* Свойства столов */}
         <PropertyTablePanel
-          selectedTable={selectedTable}
-          setSelectedId={setSelectedId}
+          selectedItem={selectedItem}
           handleSetNumber={handleSetNumber}
           handleRotate={handleRotate}
           handleDelete={handleDelete}
         />
       </Box>
 
-      {/*Оверлей при перетаскивании  */}
       <DragOverlay dropAnimation={null}>
         {dragData && (
           <TableDragOverlay

@@ -1,6 +1,5 @@
 import {
   Paper,
-  Title,
   Divider,
   ScrollArea,
   Stack,
@@ -8,24 +7,21 @@ import {
   Group,
   Badge,
   NumberInput,
-  FileInput,
   Box,
   Button,
   Tooltip,
   Text,
-  Image,
 } from "@mantine/core";
-import { IconPhoto, IconRotateClockwise, IconTrash } from "@tabler/icons-react";
-import { PlacedTable } from "../model/type";
+import { IconRotateClockwise, IconTrash } from "@tabler/icons-react";
+import { PlacedFloorItem } from "../model/type";
 
 export default function PropertyTablePanel({
-  selectedTable,
+  selectedItem,
   handleSetNumber,
   handleRotate,
   handleDelete,
 }: {
-  selectedTable: PlacedTable | null;
-  setSelectedId: any;
+  selectedItem: PlacedFloorItem | null;
   handleSetNumber: (id: string, val: number | null) => void;
   handleRotate: (id: string) => void;
   handleDelete: (id: string) => void;
@@ -47,15 +43,17 @@ export default function PropertyTablePanel({
       </Text>
       <Divider mb="sm" />
 
-      {selectedTable ? (
+      {selectedItem ? (
         <ScrollArea style={{ flex: 1 }}>
           <Stack gap="md">
             <Card withBorder padding="sm">
               <Group justify="space-between">
                 <Text size="sm" fw={600}>
-                  ID
+                  Floor item ID
                 </Text>
-                <Badge variant="light">{selectedTable.id}</Badge>
+                <Badge variant="light">
+                  {selectedItem.id != null ? selectedItem.id : "new"}
+                </Badge>
               </Group>
             </Card>
 
@@ -64,48 +62,58 @@ export default function PropertyTablePanel({
                 <Text size="sm" fw={600}>
                   Шаблон
                 </Text>
-                <Badge color={selectedTable.color} variant="filled">
-                  {selectedTable.label}
+                <Badge color={selectedItem.color} variant="filled">
+                  {selectedItem.label}
                 </Badge>
               </Group>
+
+              <Group justify="space-between" mb={4}>
+                <Text size="xs" c="dimmed">
+                  Тип объекта
+                </Text>
+                <Text size="xs">{selectedItem.type}</Text>
+              </Group>
+
+              {selectedItem.type === "TABLE" && (
+                <Group justify="space-between" mb={4}>
+                  <Text size="xs" c="dimmed">
+                    Table ID
+                  </Text>
+                  <Text size="xs">
+                    {selectedItem.tableId != null
+                      ? selectedItem.tableId
+                      : "new"}
+                  </Text>
+                </Group>
+              )}
 
               <Group justify="space-between">
                 <Text size="xs" c="dimmed">
                   Поворот
                 </Text>
-                <Text size="xs">{selectedTable.rotation}°</Text>
+                <Text size="xs">{selectedItem.rotation}°</Text>
               </Group>
             </Card>
 
-            <NumberInput
-              label="Номер стола"
-              placeholder="Введите номер"
-              min={1}
-              max={999}
-              value={selectedTable.number ?? ""}
-              onChange={(val) =>
-                handleSetNumber(
-                  selectedTable.id,
-                  typeof val === "number" ? val : null,
-                )
-              }
-            />
-
-            {selectedTable.photo && (
+            {selectedItem.type === "TABLE" ? (
+              <NumberInput
+                label="Номер стола"
+                placeholder="Введите номер"
+                min={1}
+                max={999}
+                value={selectedItem.number ?? ""}
+                onChange={(val) =>
+                  handleSetNumber(
+                    selectedItem.clientId,
+                    typeof val === "number" ? val : null,
+                  )
+                }
+              />
+            ) : (
               <Box>
-                <Text size="xs" c="dimmed" mb={4}>
-                  Превью:
+                <Text size="sm" c="dimmed">
+                  У этого типа объекта нет дополнительных полей.
                 </Text>
-                <Image
-                  src={selectedTable.photo}
-                  alt="preview"
-                  radius="sm"
-                  h={120}
-                  fit="cover"
-                />
-                <Button variant="subtle" color="red" size="xs" fullWidth mt={4}>
-                  Удалить фото
-                </Button>
               </Box>
             )}
 
@@ -117,17 +125,17 @@ export default function PropertyTablePanel({
                   variant="light"
                   color="blue"
                   leftSection={<IconRotateClockwise size={16} />}
-                  onClick={() => handleRotate(selectedTable.id)}
+                  onClick={() => handleRotate(selectedItem.clientId)}
                 >
                   Повернуть
                 </Button>
               </Tooltip>
-              <Tooltip label="Удалить стол">
+              <Tooltip label="Удалить объект">
                 <Button
                   variant="light"
                   color="red"
                   leftSection={<IconTrash size={16} />}
-                  onClick={() => handleDelete(selectedTable.id)}
+                  onClick={() => handleDelete(selectedItem.clientId)}
                 >
                   Удалить
                 </Button>
@@ -145,7 +153,7 @@ export default function PropertyTablePanel({
           }}
         >
           <Text size="sm" c="dimmed" ta="center">
-            Выберите стол на сетке
+            Выберите объект на сетке
             <br />
             для редактирования свойств
           </Text>

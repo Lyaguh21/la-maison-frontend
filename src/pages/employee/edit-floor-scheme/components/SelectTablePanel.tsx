@@ -1,19 +1,10 @@
-import {
-  Paper,
-  Title,
-  Divider,
-  Stack,
-  Box,
-  Button,
-  Text,
-  Group,
-} from "@mantine/core";
+import { Paper, Divider, Stack, Box, Button, Text, Group } from "@mantine/core";
 import { IconDeviceFloppy } from "@tabler/icons-react";
-import { TABLE_TEMPLATES, TableTemplate } from "../model/type";
+import { FLOOR_ITEM_TEMPLATES, FloorItemTemplate } from "../model/type";
 import { useDraggable } from "@dnd-kit/core";
 
 //* Перетаскиваемый шаблон
-function DraggableTemplate({ template }: { template: TableTemplate }) {
+function DraggableTemplate({ template }: { template: FloorItemTemplate }) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: `template-${template.id}`,
     data: { type: "template", template },
@@ -43,8 +34,16 @@ function DraggableTemplate({ template }: { template: TableTemplate }) {
             borderRadius: template.radius,
             minWidth: 20,
             minHeight: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#fff",
+            fontWeight: 700,
+            fontSize: 10,
           }}
-        />
+        >
+          {template.shortLabel}
+        </Box>
         <div>
           <Text fw={600} size="sm">
             {template.label}
@@ -60,8 +59,10 @@ function DraggableTemplate({ template }: { template: TableTemplate }) {
 
 export default function SelectTablePanel({
   handleSave,
+  isSaving,
 }: {
   handleSave: () => void;
+  isSaving: boolean;
 }) {
   return (
     <Paper
@@ -75,11 +76,11 @@ export default function SelectTablePanel({
       }}
     >
       <Text ta="center" fz="lg" fw={600} mb="sm">
-        Шаблоны столов
+        Объекты схемы
       </Text>
       <Divider mb="sm" />
       <Stack gap="sm">
-        {TABLE_TEMPLATES.map((tpl) => (
+        {FLOOR_ITEM_TEMPLATES.map((tpl) => (
           <DraggableTemplate key={tpl.id} template={tpl} />
         ))}
       </Stack>
@@ -87,10 +88,10 @@ export default function SelectTablePanel({
       <Divider my="md" />
 
       <Text size="xs" c="dimmed" mb="xs">
-        Перетащите стол на сетку
+        Перетащите объект на сетку
       </Text>
       <Text size="xs" c="dimmed" mb="xs">
-        Клик по столу — выделить
+        Клик по объекту выделяет его
       </Text>
 
       <Box style={{ flex: 1 }} />
@@ -99,6 +100,7 @@ export default function SelectTablePanel({
         fullWidth
         leftSection={<IconDeviceFloppy size={18} />}
         color="green"
+        loading={isSaving}
         onClick={handleSave}
       >
         Сохранить план
