@@ -8,6 +8,7 @@ import {
   Center,
 } from "@mantine/core";
 import { DishCard } from "@/widgets/dish-card";
+import { useNavigate } from "react-router-dom";
 
 const dishes = [
   {
@@ -61,6 +62,8 @@ const dishes = [
 ];
 
 export default function ChefsChoiceSection() {
+  const navigate = useNavigate();
+
   return (
     <Box py={100}>
       <Container size="lg">
@@ -86,6 +89,7 @@ export default function ChefsChoiceSection() {
 
           <Center mt="md">
             <Button
+              onClick={() => navigate("/menu")}
               variant="outline"
               color="burgundy.6"
               radius={0}
