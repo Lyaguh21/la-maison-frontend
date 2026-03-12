@@ -1,7 +1,8 @@
 import { Paper, Divider, Stack, Box, Button, Text, Group } from "@mantine/core";
 import { IconDeviceFloppy } from "@tabler/icons-react";
-import { FLOOR_ITEM_TEMPLATES, FloorItemTemplate } from "../model/type";
+import { FLOOR_ITEM_TEMPLATES } from "../model/type";
 import { useDraggable } from "@dnd-kit/core";
+import { FloorItemTemplate } from "@/entities/floor-items";
 
 //* Перетаскиваемый шаблон
 function DraggableTemplate({ template }: { template: FloorItemTemplate }) {

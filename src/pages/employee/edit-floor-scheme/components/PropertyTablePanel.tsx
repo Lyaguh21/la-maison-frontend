@@ -1,3 +1,4 @@
+import { PlacedFloorItem } from "@/entities/floor-items";
 import {
   Paper,
   Divider,
@@ -13,7 +14,6 @@ import {
   Text,
 } from "@mantine/core";
 import { IconRotateClockwise, IconTrash } from "@tabler/icons-react";
-import { PlacedFloorItem } from "../model/type";
 
 export default function PropertyTablePanel({
   selectedItem,

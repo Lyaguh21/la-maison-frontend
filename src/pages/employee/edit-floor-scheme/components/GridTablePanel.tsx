@@ -3,11 +3,11 @@ import {
   GRID_COLS,
   CELL_SIZE,
   GRID_ROWS,
-  PlacedFloorItem,
   isRotatedFloorItem,
 } from "../model/type";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { IconRotateClockwise, IconTrash } from "@tabler/icons-react";
+import { PlacedFloorItem } from "@/entities/floor-items";
 
 //* Перетаскиваемый размещённый объект
 function DraggablePlacedFloorItem({
