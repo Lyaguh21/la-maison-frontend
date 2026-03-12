@@ -51,8 +51,9 @@ function DraggablePlacedTable({
         style={{
           width: "100%",
           height: "100%",
+          borderRadius: table.templateId === "SIX" ? 64 : 4,
           backgroundColor: table.color,
-          borderRadius: 6,
+
           border: isSelected ? "3px solid #fff" : "2px solid rgba(0,0,0,0.2)",
           boxShadow: isSelected
             ? "0 0 0 2px #228be6, 0 4px 12px rgba(0,0,0,0.3)"
@@ -62,37 +63,17 @@ function DraggablePlacedTable({
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
-          overflow: "hidden",
         }}
       >
-        {table.photo && (
-          <Image
-            src={table.photo}
-            alt="table"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              opacity: 0.3,
-            }}
-          />
-        )}
         <Text
           c="white"
           fw={700}
+          fz="sm"
+          ta="center"
           size="sm"
           style={{ zIndex: 1, textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}
         >
           {table.number != null ? `№${table.number}` : table.label}
-        </Text>
-        <Text
-          c="white"
-          size="xs"
-          style={{ zIndex: 1, textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}
-        >
-          {table.rotation}°
         </Text>
 
         {isSelected && (
@@ -102,7 +83,7 @@ function DraggablePlacedTable({
               position: "absolute",
               top: 2,
               right: 2,
-              zIndex: 2,
+              zIndex: 10,
             }}
           >
             <ActionIcon
@@ -134,7 +115,7 @@ function DraggablePlacedTable({
   );
 }
 
-//* Ячейка сетки 
+//* Ячейка сетки
 
 function GridCell({ col, row }: { col: number; row: number }) {
   const { setNodeRef, isOver } = useDroppable({

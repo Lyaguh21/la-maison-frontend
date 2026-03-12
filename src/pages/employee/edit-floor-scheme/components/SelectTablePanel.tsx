@@ -9,7 +9,7 @@ import {
   Group,
 } from "@mantine/core";
 import { IconDeviceFloppy } from "@tabler/icons-react";
-import { PlacedTable, TABLE_TEMPLATES, TableTemplate } from "../model/type";
+import { TABLE_TEMPLATES, TableTemplate } from "../model/type";
 import { useDraggable } from "@dnd-kit/core";
 
 //* Перетаскиваемый шаблон
@@ -34,20 +34,20 @@ function DraggableTemplate({ template }: { template: TableTemplate }) {
         touchAction: "none",
       }}
     >
-      <Group>
+      <Group wrap="nowrap">
         <Box
           style={{
-            width: template.width * 20,
-            height: template.height * 20,
+            width: template.width * 15,
+            height: template.height * 15,
             backgroundColor: template.color,
-            borderRadius: 4,
-            minWidth: 40,
-            minHeight: 40,
+            borderRadius: template.radius,
+            minWidth: 20,
+            minHeight: 20,
           }}
         />
         <div>
           <Text fw={600} size="sm">
-            Стол {template.label}
+            {template.label}
           </Text>
           <Text size="xs" c="dimmed">
             {template.width}×{template.height} клеток
@@ -59,10 +59,8 @@ function DraggableTemplate({ template }: { template: TableTemplate }) {
 }
 
 export default function SelectTablePanel({
-  tables,
   handleSave,
 }: {
-  tables: PlacedTable[];
   handleSave: () => void;
 }) {
   return (
@@ -70,16 +68,15 @@ export default function SelectTablePanel({
       shadow="md"
       p="md"
       style={{
-        width: 220,
         flexShrink: 0,
         borderRight: "1px solid #dee2e6",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <Title order={5} mb="sm">
+      <Text ta="center" fz="lg" fw={600} mb="sm">
         Шаблоны столов
-      </Title>
+      </Text>
       <Divider mb="sm" />
       <Stack gap="sm">
         {TABLE_TEMPLATES.map((tpl) => (
@@ -95,9 +92,6 @@ export default function SelectTablePanel({
       <Text size="xs" c="dimmed" mb="xs">
         Клик по столу — выделить
       </Text>
-      <Text size="xs" c="dimmed" mb="xs">
-        Кнопки ↻ и 🗑 на выделенном столе
-      </Text>
 
       <Box style={{ flex: 1 }} />
 
@@ -109,9 +103,6 @@ export default function SelectTablePanel({
       >
         Сохранить план
       </Button>
-      <Text size="xs" c="dimmed" mt={4} ta="center">
-        Столов размещено: {tables.length}
-      </Text>
     </Paper>
   );
 }

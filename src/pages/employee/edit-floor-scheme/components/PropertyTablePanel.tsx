@@ -42,9 +42,9 @@ export default function PropertyTablePanel({
         flexDirection: "column",
       }}
     >
-      <Title order={5} mb="sm">
-        ⚙️ Свойства стола
-      </Title>
+      <Text ta="center" fz="lg" fw={600} mb="sm">
+        Свойства объекта
+      </Text>
       <Divider mb="sm" />
 
       {selectedTable ? (
@@ -68,14 +68,7 @@ export default function PropertyTablePanel({
                   {selectedTable.label}
                 </Badge>
               </Group>
-              <Group justify="space-between" mb={4}>
-                <Text size="xs" c="dimmed">
-                  Позиция
-                </Text>
-                <Text size="xs">
-                  ({selectedTable.gridX}, {selectedTable.gridY})
-                </Text>
-              </Group>
+
               <Group justify="space-between">
                 <Text size="xs" c="dimmed">
                   Поворот
@@ -98,13 +91,6 @@ export default function PropertyTablePanel({
               }
             />
 
-            <FileInput
-              label="Фото стола"
-              placeholder="Загрузить фото"
-              accept="image/*"
-              leftSection={<IconPhoto size={16} />}
-            />
-
             {selectedTable.photo && (
               <Box>
                 <Text size="xs" c="dimmed" mb={4}>
@@ -125,10 +111,11 @@ export default function PropertyTablePanel({
 
             <Divider />
 
-            <Group grow>
+            <Stack>
               <Tooltip label="Повернуть на 90°">
                 <Button
                   variant="light"
+                  color="blue"
                   leftSection={<IconRotateClockwise size={16} />}
                   onClick={() => handleRotate(selectedTable.id)}
                 >
@@ -145,7 +132,7 @@ export default function PropertyTablePanel({
                   Удалить
                 </Button>
               </Tooltip>
-            </Group>
+            </Stack>
           </Stack>
         </ScrollArea>
       ) : (

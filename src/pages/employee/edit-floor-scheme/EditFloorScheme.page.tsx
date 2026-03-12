@@ -179,14 +179,13 @@ export default function EditFloorScheme() {
   const handleSave = () => {
     const payload = tables.map((t) => ({
       id: t.id,
-      templateId: t.templateId,
-      gridX: t.gridX,
-      gridY: t.gridY,
+      tableType: t.templateId,
+      x: t.gridX,
+      y: t.gridY,
       width: t.width,
       height: t.height,
       rotation: t.rotation,
       number: t.number,
-      photo: t.photo ? "(base64 data)" : null,
     }));
     console.log("💾 Сохранение столов:", JSON.stringify(payload, null, 2));
     console.log("Всего столов:", tables.length);
@@ -250,7 +249,7 @@ export default function EditFloorScheme() {
         }}
       >
         {/* Шаблоны для перетаскивания */}
-        <SelectTablePanel tables={tables} handleSave={handleSave} />
+        <SelectTablePanel handleSave={handleSave} />
 
         {/* Сетка столов */}
         <GridTablePanel
