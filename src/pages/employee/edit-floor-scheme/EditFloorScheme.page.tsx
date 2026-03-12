@@ -14,9 +14,6 @@ import { useNotifications } from "@/shared/lib";
 
 import SelectTablePanel from "./components/SelectTablePanel";
 import {
-  FloorItemTemplate,
-  PlacedFloorItem,
-  FloorItemRotation,
   GRID_COLS,
   GRID_ROWS,
   getFloorItemTemplateById,
@@ -28,12 +25,16 @@ import {
 import GridTablePanel from "./components/GridTablePanel";
 import PropertyTablePanel from "./components/PropertyTablePanel";
 import TableDragOverlay from "./components/TableDragOverlay";
+
+import { AnimatePresence, motion } from "motion/react";
 import {
   useGetFloorItemsQuery,
-  useSyncFloorItemsMutation,
   useGetTablesQuery,
-} from "./model/api";
-import { AnimatePresence, motion } from "motion/react";
+  useSyncFloorItemsMutation,
+  PlacedFloorItem,
+  FloorItemTemplate,
+  FloorItemRotation,
+} from "@/entities/floor-items";
 
 export default function EditFloorScheme() {
   const { showError, showSuccess } = useNotifications();

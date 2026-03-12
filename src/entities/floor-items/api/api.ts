@@ -1,5 +1,5 @@
 import { baseApi } from "@/shared/api";
-import type { FloorItemDto, SyncFloorItemDto } from "./type";
+import type { FloorItemDto, SyncFloorItemDto } from "../model/type";
 
 export const floorItemsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
