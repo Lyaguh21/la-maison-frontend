@@ -9,6 +9,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { Box, Center, Loader, Text } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { useNotifications } from "@/shared/lib";
 
 import SelectTablePanel from "./components/SelectTablePanel";
@@ -18,7 +19,6 @@ import {
   FloorItemRotation,
   GRID_COLS,
   GRID_ROWS,
-  FLOOR_ITEM_TEMPLATES,
   getFloorItemTemplateById,
   isRotatedFloorItem,
   isTableFloorItem,
@@ -33,6 +33,7 @@ import {
   useSyncFloorItemsMutation,
   useGetTablesQuery,
 } from "./model/api";
+import { AnimatePresence, motion } from "motion/react";
 
 export default function EditFloorScheme() {
   const { showError, showSuccess } = useNotifications();
@@ -58,6 +59,8 @@ export default function EditFloorScheme() {
 
   const selectedItem =
     items.find((item) => item.clientId === selectedId) ?? null;
+
+  const isWide = useMediaQuery("(min-width: 1200px)");
 
   const mapServerItems = useCallback((nextItems: typeof data) => {
     idCounter.current = 0;
@@ -187,6 +190,7 @@ export default function EditFloorScheme() {
         color: dragData.template.color,
         radius: dragData.template.radius,
         number: null,
+        //@ts-ignore
         tableType:
           dragData.template.type === "TABLE" ? dragData.template.id : undefined,
       };
@@ -330,45 +334,112 @@ export default function EditFloorScheme() {
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
-      <Box
-        style={{
-          display: "flex",
-          height: "100vh",
-          overflow: "hidden",
-          backgroundColor: "#f8f9fa",
-        }}
+    <>
+      <DndContext
+        sensors={sensors}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
       >
-        <SelectTablePanel handleSave={handleSave} isSaving={isSaving} />
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: isWide ? "row" : "column",
+            minHeight: "100vh",
+            overflow: "hidden",
+            backgroundColor: "#f8f9fa",
+          }}
+        >
+          <AnimatePresence>
+            {/** Left panel: shown as sidebar on wide, as top stacked on narrow */}
+            {isWide ? (
+              <motion.div
+                key="select-left"
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -12 }}
+                transition={{ ease: "easeInOut", duration: 0.5 }}
+                style={{ display: "flex" }}
+              >
+                <SelectTablePanel handleSave={handleSave} isSaving={isSaving} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="select-top"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ ease: "easeInOut", duration: 0.3 }}
+                style={{ width: "100%" }}
+              >
+                <SelectTablePanel handleSave={handleSave} isSaving={isSaving} />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-        <GridTablePanel
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          items={items}
-          handleRotate={handleRotate}
-          handleDelete={handleDelete}
-        />
+          <Box style={{ flex: 1, minWidth: 0 }}>
+            <GridTablePanel
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
+              items={items}
+              handleRotate={handleRotate}
+              handleDelete={handleDelete}
+            />
+          </Box>
 
-        <PropertyTablePanel
-          selectedItem={selectedItem}
-          handleSetNumber={handleSetNumber}
-          handleRotate={handleRotate}
-          handleDelete={handleDelete}
-        />
-      </Box>
+          <Box style={{ width: 260, flexShrink: 0, display: "flex" }}>
+            <AnimatePresence>
+              {isWide && selectedItem && (
+                <motion.div
+                  key="prop-right"
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 12 }}
+                  transition={{ ease: "easeInOut", duration: 0.3 }}
+                  style={{ display: "flex", width: "100%" }}
+                >
+                  <PropertyTablePanel
+                    selectedItem={selectedItem}
+                    handleSetNumber={handleSetNumber}
+                    handleRotate={handleRotate}
+                    handleDelete={handleDelete}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Box>
 
-      <DragOverlay dropAnimation={null}>
-        {dragData && (
-          <TableDragOverlay
-            template={dragData.template}
-            rotation={dragData.rotation}
-          />
-        )}
-      </DragOverlay>
-    </DndContext>
+          {!isWide && (
+            <AnimatePresence>
+              {selectedItem && (
+                <motion.div
+                  key="prop-bottom"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ ease: "easeInOut", duration: 0.5 }}
+                  style={{ width: "100%" }}
+                >
+                  <PropertyTablePanel
+                    selectedItem={selectedItem}
+                    handleSetNumber={handleSetNumber}
+                    handleRotate={handleRotate}
+                    handleDelete={handleDelete}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
+        </Box>
+
+        <DragOverlay dropAnimation={null}>
+          {dragData && (
+            <TableDragOverlay
+              template={dragData.template}
+              rotation={dragData.rotation}
+            />
+          )}
+        </DragOverlay>
+      </DndContext>
+    </>
   );
 }

@@ -17,6 +17,7 @@
     "@mantine/notifications": "^8.3.16",
     "@reduxjs/toolkit": "^2.11.2",
     "@tabler/icons-react": "^3.34.1",
+    "motion": "^12.35.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-imask": "^7.6.1",

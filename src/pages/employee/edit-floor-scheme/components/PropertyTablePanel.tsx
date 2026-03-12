@@ -30,8 +30,10 @@ export default function PropertyTablePanel({
     <Paper
       shadow="md"
       p="md"
+      //@ts-ignore
       style={{
-        width: 260,
+        width: "100%",
+        maxWidth: { xl: 260 },
         flexShrink: 0,
         borderLeft: "1px solid #dee2e6",
         display: "flex",

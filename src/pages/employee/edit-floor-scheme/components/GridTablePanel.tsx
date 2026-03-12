@@ -174,6 +174,7 @@ export default function GridTablePanel({
         justifyContent: "center",
         overflow: "auto",
         padding: 24,
+        height: "100%",
       }}
       onClick={() => setSelectedId(null)}
     >
@@ -186,7 +187,7 @@ export default function GridTablePanel({
           height: GRID_ROWS * CELL_SIZE,
           backgroundColor: "#fff",
           borderRadius: 8,
-          overflow: "hidden",
+          overflow: "auto",
         }}
       >
         {/* Сетка */}

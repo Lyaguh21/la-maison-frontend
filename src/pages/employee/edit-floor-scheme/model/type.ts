@@ -61,14 +61,14 @@ export interface SyncFloorItemDto {
 
 export const CELL_SIZE = 48;
 export const GRID_COLS = 20;
-export const GRID_ROWS = 14;
+export const GRID_ROWS = 15;
 
 export const FLOOR_ITEM_TEMPLATES: FloorItemTemplate[] = [
   {
     id: "TWO",
     type: "TABLE",
     label: "Стол на двоих",
-    shortLabel: "TWO",
+    shortLabel: "2",
     width: 2,
     height: 2,
     color: "#4c6ef5",
@@ -78,7 +78,7 @@ export const FLOOR_ITEM_TEMPLATES: FloorItemTemplate[] = [
     id: "FOUR",
     type: "TABLE",
     label: "Стол на четверых",
-    shortLabel: "FOUR",
+    shortLabel: "4",
     width: 2,
     height: 3,
     color: "#40c057",
@@ -88,7 +88,7 @@ export const FLOOR_ITEM_TEMPLATES: FloorItemTemplate[] = [
     id: "SIX",
     type: "TABLE",
     label: "Стол на шестерых",
-    shortLabel: "SIX",
+    shortLabel: "6",
     width: 3,
     height: 3,
     color: "#fab005",
@@ -102,7 +102,7 @@ export const FLOOR_ITEM_TEMPLATES: FloorItemTemplate[] = [
     width: 2,
     height: 2,
     color: "#e8590c",
-    radius: 12,
+    radius: 4,
   },
   {
     id: "BAR",
@@ -112,7 +112,7 @@ export const FLOOR_ITEM_TEMPLATES: FloorItemTemplate[] = [
     width: 3,
     height: 2,
     color: "#7048e8",
-    radius: 10,
+    radius: 4,
   },
   {
     id: "EXIT",
@@ -122,7 +122,7 @@ export const FLOOR_ITEM_TEMPLATES: FloorItemTemplate[] = [
     width: 2,
     height: 1,
     color: "#2f9e44",
-    radius: 10,
+    radius: 4,
   },
 ];
 

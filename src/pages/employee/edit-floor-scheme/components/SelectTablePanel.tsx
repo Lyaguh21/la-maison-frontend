@@ -68,7 +68,10 @@ export default function SelectTablePanel({
     <Paper
       shadow="md"
       p="md"
+      //@ts-ignore
       style={{
+        width: "100%",
+        maxWidth: { xl: 320 },
         flexShrink: 0,
         borderRight: "1px solid #dee2e6",
         display: "flex",
