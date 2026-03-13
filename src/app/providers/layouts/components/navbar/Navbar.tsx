@@ -31,8 +31,8 @@ const links = [
     roles: ["ADMIN"],
   },
   {
-    label: "Ресторан",
-    link: "/employee/floor-scheme",
+    label: "Брони",
+    link: "/employee/reservations",
     roles: ["WAITER"],
   },
   {

@@ -25,7 +25,7 @@ const linkEmployee = [
     role: "ADMIN",
     link: "/employee/dashboards",
   },
-  { role: "WAITER", link: "/employee/floor-scheme" },
+  { role: "WAITER", link: "/employee/reservations" },
   { role: "COOK", link: "/employee/orders" },
 ];
 

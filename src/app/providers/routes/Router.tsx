@@ -1,14 +1,22 @@
-import { Menu } from "@/pages/menu";
-import { Error404 } from "@/pages/errors/Error404";
 import { Login, Register } from "@/pages/auth";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Landing } from "@/pages/landing";
+
 import { Booking } from "@/pages/booking";
 import { Profile } from "@/pages/profile";
 import LandingLayout from "../layouts/Landing.layout";
 import EmployeeLayout from "../layouts/Employee.layout";
-import { Dashboards, EditFloorScheme, Users } from "@/pages/employee";
+import {
+  Dashboards,
+  EditFloorScheme,
+  Orders,
+  ReadyDish,
+  Reservations,
+  Users,
+} from "@/pages/employee";
 import { RoleGuard } from "../guards/RoleGuard";
+import { Error404 } from "@/pages/Errors/Error404";
+import { Menu } from "@/pages/Menu";
+import { Landing } from "@/pages/Landing";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +74,30 @@ const router = createBrowserRouter([
         element: (
           <RoleGuard roles={["ADMIN"]}>
             <Users />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/employee/orders",
+        element: (
+          <RoleGuard roles={["WAITER"]}>
+            <Orders />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/employee/reservations",
+        element: (
+          <RoleGuard roles={["WAITER"]}>
+            <Reservations />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/employee/ready-dishes",
+        element: (
+          <RoleGuard roles={["WAITER"]}>
+            <ReadyDish />
           </RoleGuard>
         ),
       },
