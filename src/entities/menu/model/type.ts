@@ -1,3 +1,5 @@
+import { IDish } from "@/entities/dish";
+
 export interface IMenuQueryParams {
   search?: string;
   sort?: string;
@@ -11,24 +13,8 @@ export interface IMenuCategory {
   name: string;
 }
 
-export interface Ingredient {
-  id: number;
-  name: string;
-}
-
-export interface IDishCard {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  photo: string;
-  dishIngredients?: Ingredient[];
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
 export interface IDishesListResponse {
-  data: IDishCard[];
+  data: IDish[];
   meta: {
     page: number;
     limit: number;

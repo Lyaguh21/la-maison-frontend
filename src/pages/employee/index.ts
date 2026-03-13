@@ -4,3 +4,4 @@ export { default as Users } from "./users/Users.page";
 export { default as Orders } from "./orders/Orders.page";
 export { default as ReadyDish } from "./ready-dish/ReadyDish.page";
 export { default as Reservations } from "./reservations/Reservations.page";
+export { default as QueueOrders } from "./queue-orders/QueueOrders.page";

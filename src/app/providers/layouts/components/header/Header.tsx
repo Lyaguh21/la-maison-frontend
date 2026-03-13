@@ -26,7 +26,7 @@ const linkEmployee = [
     link: "/employee/dashboards",
   },
   { role: "WAITER", link: "/employee/reservations" },
-  { role: "COOK", link: "/employee/orders" },
+  { role: "COOK", link: "/employee/queue-orders" },
 ];
 
 export default function Header() {

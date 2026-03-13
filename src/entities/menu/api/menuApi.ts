@@ -3,8 +3,8 @@ import {
   IDishesListResponse,
   IMenuCategory,
   IMenuQueryParams,
-  Ingredient,
 } from "../model/type";
+import { Ingredient } from "@/entities/dish";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

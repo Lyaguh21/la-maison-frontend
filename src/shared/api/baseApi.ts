@@ -13,6 +13,8 @@ export const baseApi = createApi({
     "Revenue",
     "Reservations",
     "Waiters",
+    "OrderCooking",
+    "Order",
   ],
   endpoints: () => ({}),
 });

@@ -9,6 +9,7 @@ import {
   Dashboards,
   EditFloorScheme,
   Orders,
+  QueueOrders,
   ReadyDish,
   Reservations,
   Users,
@@ -98,6 +99,14 @@ const router = createBrowserRouter([
         element: (
           <RoleGuard roles={["WAITER"]}>
             <ReadyDish />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/employee/queue-orders",
+        element: (
+          <RoleGuard roles={["COOK"]}>
+            <QueueOrders />
           </RoleGuard>
         ),
       },
