@@ -82,6 +82,13 @@ export default function OrderCard({ data }: { data: IOrderCookingResponse }) {
   const cookingTime = Math.floor(
     (new Date().getTime() - new Date(data.createdAt).getTime()) / 1000 / 60,
   );
+  const archiveCookingTime = Math.floor(
+    (new Date(data.finishedAt ?? new Date()).getTime() -
+      new Date(data.createdAt).getTime()) /
+      1000 /
+      60,
+  );
+
   return (
     <Paper withBorder shadow="md" p="lg" radius="md">
       <Text
@@ -89,14 +96,16 @@ export default function OrderCard({ data }: { data: IOrderCookingResponse }) {
         fz={48}
         ta="center"
         c={
-          cookingTime < 10
-            ? theme.colors.green[6]
-            : cookingTime < 20
-              ? theme.colors.yellow[6]
-              : theme.colors.red[6]
+          !data.finishedAt
+            ? cookingTime < 10
+              ? theme.colors.green[6]
+              : cookingTime < 20
+                ? theme.colors.yellow[6]
+                : theme.colors.red[6]
+            : theme.primaryColor
         }
       >
-        {cookingTime}
+        {data.finishedAt ? archiveCookingTime : cookingTime}
         <Text ml={4} span fz="lg" c={theme.colors.dark[3]} fw={600}>
           мин
         </Text>
@@ -106,11 +115,17 @@ export default function OrderCard({ data }: { data: IOrderCookingResponse }) {
         <Text fz="lg" fw={600}>
           Заказ №{data.id}
         </Text>
+
         <Text fz="sm" c={theme.colors.dark[3]} fw={600}>
           {new Date(data.createdAt).toLocaleTimeString("ru-RU", {
             hour: "2-digit",
             minute: "2-digit",
           })}
+          {data.finishedAt &&
+            ` - ${new Date(data.finishedAt).toLocaleTimeString("ru-RU", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}`}
         </Text>
       </Group>
       <Divider my="sm" />

@@ -21,6 +21,7 @@ export interface IOrderCookingResponse {
   totalPriceOrder: number;
   createdAt: string;
   updatedAt: string;
+  finishedAt: string | null;
   orderItems: IOrderItem[];
 }
 
