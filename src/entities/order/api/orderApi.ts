@@ -3,7 +3,7 @@ import { IOrderCookingResponse, IUpdateOrderItemStatus } from "../model/type";
 
 export const orderApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    orderCooking: build.query<IOrderCookingResponse, void>({
+    orderCooking: build.query<IOrderCookingResponse[], void>({
       query: () => "/orders/cooking",
       providesTags: [{ type: "OrderCooking", id: "LIST" }],
     }),

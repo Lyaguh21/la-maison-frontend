@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { listenerMiddleware, registerListeners } from "./listenersMiddleware";
 
 import { baseApi } from "@/shared/api";
-import { userSlice } from "@/entities/user/model/userSlice";
+import { userReducer } from "@/entities/user/model/userSlice";
+import { viewReducer } from "@/entities/view";
 
 export const store = configureStore({
   //? Подключение слайсов
   reducer: {
-    user: userSlice.reducer,
+    user: userReducer,
+    view: viewReducer,
 
     [baseApi.reducerPath]: baseApi.reducer,
   },

@@ -1,3 +1,4 @@
+import { Ingredient } from "@/entities/dish";
 import { IDishCard } from "@/entities/menu";
 import {
   Card,
@@ -11,10 +12,16 @@ import {
 } from "@mantine/core";
 import { useSearchParams } from "react-router-dom";
 
-export default function dishCard({ dish }: { dish: IDishCard }) {
+export default function dishCard({
+  dish,
+  visibleType,
+}: {
+  dish: IDishCard;
+  visibleType?: "grid" | "list";
+}) {
   const theme = useMantineTheme();
   const [searchParams] = useSearchParams();
-  const visible = searchParams.get("visible") || "grid";
+  const visible = searchParams.get("visible") || visibleType || "grid";
 
   return (
     <Card
@@ -61,7 +68,7 @@ export default function dishCard({ dish }: { dish: IDishCard }) {
             </Text>
             <Flex wrap="wrap" gap={4} mt={8}>
               {dish.dishIngredients &&
-                dish.dishIngredients.map((ingredient) => (
+                dish.dishIngredients.map((ingredient: Ingredient) => (
                   <Badge size="sm" key={ingredient.id}>
                     {ingredient.name}
                   </Badge>
