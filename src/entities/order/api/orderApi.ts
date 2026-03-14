@@ -8,6 +8,11 @@ export const orderApi = baseApi.injectEndpoints({
       providesTags: [{ type: "OrderCooking", id: "LIST" }],
     }),
 
+    orderArchive: build.query<IOrderCookingResponse[], void>({
+      query: () => "/orders/archive",
+      providesTags: [{ type: "OrderArchive", id: "LIST" }],
+    }),
+
     updateOrderItemStatus: build.mutation<
       void,
       IUpdateOrderItemStatus & { id: number }
@@ -20,10 +25,14 @@ export const orderApi = baseApi.injectEndpoints({
       invalidatesTags: [
         { type: "Order", id: "LIST" },
         { type: "OrderCooking", id: "LIST" },
+        { type: "OrderArchive", id: "LIST" },
       ],
     }),
   }),
 });
 
-export const { useOrderCookingQuery, useUpdateOrderItemStatusMutation } =
-  orderApi;
+export const {
+  useOrderCookingQuery,
+  useOrderArchiveQuery,
+  useUpdateOrderItemStatusMutation,
+} = orderApi;

@@ -63,13 +63,15 @@ function OrderItem({ item }: { item: IOrderItem }) {
         <Text w={15} fw={600}>
           {item.quantity}
         </Text>
-        <ActionIcon
-          size="sm"
-          color={theme.colors.green[6]}
-          onClick={handleStatusChange}
-        >
-          <IconCheck />
-        </ActionIcon>
+        {item.status === "COOKING" && (
+          <ActionIcon
+            size="sm"
+            color={theme.colors.green[6]}
+            onClick={handleStatusChange}
+          >
+            <IconCheck />
+          </ActionIcon>
+        )}
       </Group>
     </Flex>
   );
