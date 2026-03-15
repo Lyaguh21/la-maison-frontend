@@ -1,22 +1,24 @@
-import { ActionIcon, Box, Group, Paper, Text } from "@mantine/core";
+import { ActionIcon, Box, Flex, Group, Paper, Text } from "@mantine/core";
 import {
   GRID_COLS,
   CELL_SIZE,
   GRID_ROWS,
   isRotatedFloorItem,
-} from "../model/type";
+} from "../model/helpers";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { IconRotateClockwise, IconTrash } from "@tabler/icons-react";
 import { PlacedFloorItem } from "@/entities/floor-items";
 
 //* Перетаскиваемый размещённый объект
 function DraggablePlacedFloorItem({
+  typeItem,
   item,
   isSelected,
   onSelect,
   onRotate,
   onDelete,
 }: {
+  typeItem: "View" | "Edit";
   item: PlacedFloorItem;
   isSelected: boolean;
   onSelect: () => void;
@@ -49,7 +51,7 @@ function DraggablePlacedFloorItem({
         height: displayH * CELL_SIZE,
         opacity: isDragging ? 0.3 : 1,
         zIndex: isSelected ? 10 : 5,
-        cursor: "grab",
+        cursor: typeItem === "View" ? "pointer" : "grab",
         touchAction: "none",
       }}
     >
@@ -84,7 +86,7 @@ function DraggablePlacedFloorItem({
             : item.shortLabel}
         </Text>
 
-        {isSelected && (
+        {isSelected && typeItem === "Edit" && (
           <Group
             gap={2}
             style={{
@@ -146,17 +148,19 @@ function GridCell({ col, row }: { col: number; row: number }) {
 }
 
 export default function GridTablePanel({
+  typePanel,
   selectedId,
   setSelectedId,
   items,
   handleRotate,
   handleDelete,
 }: {
+  typePanel: "View" | "Edit";
   selectedId: string | null;
   setSelectedId: (el: string | null) => void;
   items: PlacedFloorItem[];
-  handleRotate: (id: string) => void;
-  handleDelete: (id: string) => void;
+  handleRotate?: (id: string) => void;
+  handleDelete?: (id: string) => void;
 }) {
   const gridCells = [];
   for (let r = 0; r < GRID_ROWS; r++) {
@@ -166,14 +170,12 @@ export default function GridTablePanel({
   }
 
   return (
-    <Box
+    <Flex
+      align="center"
+      flex={1}
+      justify="center"
       style={{
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         overflow: "auto",
-        padding: 24,
         height: "100%",
       }}
       onClick={() => setSelectedId(null)}
@@ -204,15 +206,16 @@ export default function GridTablePanel({
         {/* Размещённые объекты */}
         {items.map((item) => (
           <DraggablePlacedFloorItem
+            typeItem={typePanel}
             key={item.clientId}
             item={item}
             isSelected={selectedId === item.clientId}
             onSelect={() => setSelectedId(item.clientId)}
-            onRotate={() => handleRotate(item.clientId)}
-            onDelete={() => handleDelete(item.clientId)}
+            onRotate={() => handleRotate?.(item.clientId)}
+            onDelete={() => handleDelete?.(item.clientId)}
           />
         ))}
       </Paper>
-    </Box>
+    </Flex>
   );
 }

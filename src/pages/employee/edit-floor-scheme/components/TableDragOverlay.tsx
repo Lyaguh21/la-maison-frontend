@@ -1,10 +1,9 @@
 import { Box, Text } from "@mantine/core";
 import {
   CELL_SIZE,
-  FloorItemRotation,
-  FloorItemTemplate,
   isRotatedFloorItem,
-} from "../model/type";
+} from "@/features/floor-scheme/model/helpers";
+import { FloorItemTemplate, FloorItemRotation } from "@/entities/floor-items";
 
 export default function TableDragOverlay({
   template,

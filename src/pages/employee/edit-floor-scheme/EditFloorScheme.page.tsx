@@ -21,8 +21,8 @@ import {
   isTableFloorItem,
   mapFloorItemDtoToPlacedItem,
   mapPlacedItemToSyncDto,
-} from "./model/type";
-import GridTablePanel from "./components/GridTablePanel";
+} from "@/features/floor-scheme/model/helpers";
+import GridTablePanel from "../../../features/floor-scheme/ui/GridTablePanel";
 import PropertyTablePanel from "./components/PropertyTablePanel";
 import TableDragOverlay from "./components/TableDragOverlay";
 
@@ -379,6 +379,7 @@ export default function EditFloorScheme() {
 
           <Box style={{ flex: 1, minWidth: 0 }}>
             <GridTablePanel
+              typePanel="Edit"
               selectedId={selectedId}
               setSelectedId={setSelectedId}
               items={items}
