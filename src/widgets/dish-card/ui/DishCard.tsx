@@ -1,11 +1,11 @@
 import { Ingredient } from "@/entities/dish";
 import { IDishCard } from "@/entities/menu";
+import { IngredientBadge } from "@/shared/ui";
 import {
   Card,
   Text,
   Image,
   useMantineTheme,
-  Badge,
   Flex,
   Group,
   AspectRatio,
@@ -69,9 +69,10 @@ export default function dishCard({
             <Flex wrap="wrap" gap={4} mt={8}>
               {dish.dishIngredients &&
                 dish.dishIngredients.map((ingredient: Ingredient) => (
-                  <Badge size="sm" key={ingredient.id}>
-                    {ingredient.name}
-                  </Badge>
+                  <IngredientBadge
+                    key={ingredient.id}
+                    ingredient={ingredient}
+                  />
                 ))}
             </Flex>
           </div>

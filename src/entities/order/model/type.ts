@@ -1,4 +1,5 @@
 import { IDish } from "@/entities/dish";
+import { IReservation } from "@/entities/reservation";
 
 type IOrderStatus = "COOKING" | "READY" | "SERVED";
 
@@ -18,6 +19,7 @@ export interface IOrderItem {
 export interface IOrderCookingResponse {
   id: number;
   reservationId: number;
+  reservation: Pick<IReservation, "tableId" | "user">;
   totalPriceOrder: number;
   createdAt: string;
   updatedAt: string;
