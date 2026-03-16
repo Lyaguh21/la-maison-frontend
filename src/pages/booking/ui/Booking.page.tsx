@@ -10,6 +10,7 @@ import ReservationPanel from "./components/ReservationPanel";
 import { IconMenu2 } from "@tabler/icons-react";
 import { useAppDispatch } from "@/shared/lib";
 import { setOpenReservationPanel } from "@/entities/view";
+import { formattedDate } from "@/shared/helpers";
 
 export default function Booking() {
   const dispatch = useAppDispatch();
@@ -22,8 +23,8 @@ export default function Booking() {
     items.find((item) => item.clientId === selectedId) ?? null;
 
   //? Дата и время бронирования
-  const [dateReservation, setDateReservation] = useState<string>(() =>
-    new Date().toLocaleDateString("en-CA"),
+  const [dateReservation, setDateReservation] = useState<string>(
+    formattedDate({}),
   );
   const [startReservationTime, setStartReservationTime] = useState<
     string | null

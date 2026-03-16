@@ -1,5 +1,5 @@
 import { useMenuCategoriesQuery } from "@/entities/menu";
-import { Fieldset, Stack, Select, Input, Box, Divider } from "@mantine/core";
+import { Fieldset, Stack, Select, Input, Divider } from "@mantine/core";
 import { useThrottledCallback } from "@mantine/hooks";
 import { useState, useEffect } from "react";
 import {

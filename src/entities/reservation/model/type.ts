@@ -1,4 +1,4 @@
-type IReservationStatus =
+export type IReservationStatus =
   | "BOOKED"
   | "SEATED"
   | "CANCELLED"
@@ -6,12 +6,23 @@ type IReservationStatus =
   | "PAID"
   | "NO_SHOW";
 
+export const ReservationStatusTranslate = {
+  BOOKED: "Забронировано",
+  SEATED: "В зале",
+  CANCELLED: "Отменено",
+  COMPLETED: "Завершено",
+  PAID: "Оплачено",
+  NO_SHOW: "Не явился",
+};
+
 export interface IReservation {
   id: number;
   tableId: number;
+  tableNumber?: number;
   userId: number;
   guestName: string | null;
   guestPhone: string | null;
+  guestsCount: number;
   status: IReservationStatus;
   startTime: string;
   endTime: string;
@@ -37,4 +48,9 @@ export interface ICreateReservationRequest {
   startTime: string;
   endTime: string;
   guestsCount: number;
+}
+
+export interface IUpdateStatusReservationQuery {
+  id: number;
+  status: IReservationStatus;
 }

@@ -1,4 +1,11 @@
-import { AppShell, AppShellNavbar, Burger, Flex, Image } from "@mantine/core";
+import {
+  AppShell,
+  AppShellNavbar,
+  Burger,
+  Flex,
+  Image,
+  Box,
+} from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";

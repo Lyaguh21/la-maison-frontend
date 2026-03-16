@@ -111,7 +111,7 @@ export default function Dashboards() {
   );
 
   return (
-    <Stack p="xl" gap="md">
+    <Stack p={{ base: "md", lg: "xl" }} gap="md">
       <Text fz="h1" fw={600} ff="'Playfair Display'">
         Дашборды
       </Text>
