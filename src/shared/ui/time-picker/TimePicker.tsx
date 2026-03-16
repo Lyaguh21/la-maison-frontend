@@ -29,7 +29,7 @@ export default function TimePicker({
         <TimeGrid
           data={getTimeRange({
             startTime: "10:00",
-            endTime: "21:00",
+            endTime: "23:00",
             interval: "00:30",
           })}
           simpleGridProps={{

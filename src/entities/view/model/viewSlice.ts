@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface ViewState {
   ui: {
     openedDishInfoModal: boolean;
+    openedReservationPanel: boolean;
   };
   selectedDish: IDish | null;
 }
@@ -11,6 +12,7 @@ export interface ViewState {
 const initialState: ViewState = {
   ui: {
     openedDishInfoModal: false,
+    openedReservationPanel: false,
   },
   selectedDish: null,
 };
@@ -25,8 +27,15 @@ export const viewSlice = createSlice({
     setSelectedDish: (state, action) => {
       state.selectedDish = action.payload;
     },
+    setOpenReservationPanel: (state, action) => {
+      state.ui.openedReservationPanel = action.payload;
+    },
   },
 });
 
-export const { setOpenDishInfoModal, setSelectedDish } = viewSlice.actions;
+export const {
+  setOpenDishInfoModal,
+  setSelectedDish,
+  setOpenReservationPanel,
+} = viewSlice.actions;
 export const viewReducer = viewSlice.reducer;

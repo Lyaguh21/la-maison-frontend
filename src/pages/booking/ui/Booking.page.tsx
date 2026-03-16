@@ -1,14 +1,18 @@
 import { PlacedFloorItem, useGetFloorItemsQuery } from "@/entities/floor-items";
 import { mapFloorItemDtoToPlacedItem } from "@/features/floor-scheme/model/helpers";
 import GridTablePanel from "@/features/floor-scheme/ui/GridTablePanel";
-import { Group, Stack } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { ActionIcon, Flex, Group, Stack, Box } from "@mantine/core";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MiniCalendar } from "@mantine/dates";
 import { TimePicker } from "@/shared/ui";
+import { useGetReservationsInRangeQuery } from "@/entities/reservation";
+import ReservationPanel from "./components/ReservationPanel";
+import { IconMenu2 } from "@tabler/icons-react";
+import { useAppDispatch } from "@/shared/lib";
+import { setOpenReservationPanel } from "@/entities/view";
 
 export default function Booking() {
-  const isWide = useMediaQuery("(min-width: 1200px)");
+  const dispatch = useAppDispatch();
   const idCounter = useRef(0);
 
   const { data } = useGetFloorItemsQuery();
@@ -18,15 +22,22 @@ export default function Booking() {
     items.find((item) => item.clientId === selectedId) ?? null;
 
   //? Дата и время бронирования
-  const [dateReservation, setDateReservation] = useState<string | null>(() =>
-    new Date().toISOString(),
+  const [dateReservation, setDateReservation] = useState<string>(() =>
+    new Date().toLocaleDateString("en-CA"),
   );
   const [startReservationTime, setStartReservationTime] = useState<
     string | null
-  >(null);
+  >("10:00");
   const [endReservationTime, setEndReservationTime] = useState<string | null>(
-    null,
+    "12:00",
   );
+
+  //? Получение броней в отрезке
+  const { data: reservationsData } = useGetReservationsInRangeQuery({
+    day: dateReservation,
+    startTime: startReservationTime?.substring(0, 5) ?? "10:00:00",
+    endTime: endReservationTime?.substring(0, 5) ?? "12:00:00",
+  });
 
   const mapServerItems = useCallback((nextItems: typeof data) => {
     idCounter.current = 0;
@@ -45,32 +56,54 @@ export default function Booking() {
     setSelectedId(null);
   }, [data, mapServerItems]);
   return (
-    <Stack p="md" gap="md" flex={1}>
-      <MiniCalendar
-        mx="auto"
-        value={dateReservation}
-        onChange={setDateReservation}
-        numberOfDays={6}
-      />
-      <Group justify="center">
-        <TimePicker
-          label="Время начала"
-          value={startReservationTime}
-          setValue={setStartReservationTime}
+    <Flex flex={1} h="100%">
+      <ActionIcon
+        size="36"
+        onClick={() => dispatch(setOpenReservationPanel(true))}
+        hiddenFrom="md"
+        style={{ justifySelf: "end" }}
+        pos="absolute"
+        right={16}
+        mt={16}
+      >
+        <IconMenu2 />
+      </ActionIcon>
+      <Stack p="md" gap="md" flex={1}>
+        <MiniCalendar
+          mx="auto"
+          value={dateReservation}
+          onChange={setDateReservation}
+          numberOfDays={6}
         />
-        <TimePicker
-          label="Время окончания"
-          value={endReservationTime}
-          setValue={setEndReservationTime}
-        />
-      </Group>
+        <Group justify="center" align="end">
+          <TimePicker
+            label="Время начала"
+            value={startReservationTime}
+            setValue={setStartReservationTime}
+          />
+          <TimePicker
+            label="Время окончания"
+            value={endReservationTime}
+            setValue={setEndReservationTime}
+          />
+        </Group>
 
-      <GridTablePanel
-        typePanel="View"
-        selectedId={selectedId}
-        setSelectedId={setSelectedId}
-        items={items}
+        <Box miw={0} maw="100vw" style={{ overflow: "auto" }}>
+          <GridTablePanel
+            reservationsData={reservationsData}
+            typePanel="View"
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+            items={items}
+          />
+        </Box>
+      </Stack>
+      <ReservationPanel
+        startReservationTime={startReservationTime}
+        endReservationTime={endReservationTime}
+        dateReservation={dateReservation}
+        selectedItem={selectedItem}
       />
-    </Stack>
+    </Flex>
   );
 }

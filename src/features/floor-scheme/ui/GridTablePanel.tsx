@@ -1,4 +1,12 @@
-import { ActionIcon, Box, Flex, Group, Paper, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Flex,
+  Group,
+  Paper,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
 import {
   GRID_COLS,
   CELL_SIZE,
@@ -8,9 +16,14 @@ import {
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { IconRotateClockwise, IconTrash } from "@tabler/icons-react";
 import { PlacedFloorItem } from "@/entities/floor-items";
+import { IReservation } from "@/entities/reservation";
+import { useAppDispatch } from "@/shared/lib";
+import { useMediaQuery } from "@mantine/hooks";
+import { setOpenReservationPanel } from "@/entities/view";
 
 //* Перетаскиваемый размещённый объект
 function DraggablePlacedFloorItem({
+  reservationOnTime,
   typeItem,
   item,
   isSelected,
@@ -18,6 +31,7 @@ function DraggablePlacedFloorItem({
   onRotate,
   onDelete,
 }: {
+  reservationOnTime?: IReservation;
   typeItem: "View" | "Edit";
   item: PlacedFloorItem;
   isSelected: boolean;
@@ -25,6 +39,9 @@ function DraggablePlacedFloorItem({
   onRotate: () => void;
   onDelete: () => void;
 }) {
+  const isSmall = useMediaQuery("(max-width: 1024px)");
+  const dispatch = useAppDispatch();
+  const theme = useMantineTheme();
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: `placed-${item.clientId}`,
     data: { type: "placed", item },
@@ -42,6 +59,9 @@ function DraggablePlacedFloorItem({
       onClick={(e) => {
         e.stopPropagation();
         onSelect();
+        if (typeItem === "View" && isSmall) {
+          dispatch(setOpenReservationPanel(true));
+        }
       }}
       style={{
         position: "absolute",
@@ -60,7 +80,7 @@ function DraggablePlacedFloorItem({
           width: "100%",
           height: "100%",
           borderRadius: item.radius,
-          backgroundColor: item.color,
+          backgroundColor: reservationOnTime ? "#7d7d7d" : item.color,
 
           border: isSelected ? "3px solid #fff" : "2px solid rgba(0,0,0,0.2)",
           boxShadow: isSelected
@@ -120,6 +140,36 @@ function DraggablePlacedFloorItem({
             </ActionIcon>
           </Group>
         )}
+
+        {reservationOnTime && (
+          <Group
+            gap={2}
+            style={{
+              position: "absolute",
+              top: 2,
+              zIndex: 10,
+            }}
+            justify="center"
+          >
+            <Text size="xs" fw={600} c={theme.white}>
+              Забронирован
+            </Text>
+            <Text c="white" size="xs">
+              {new Date(reservationOnTime.startTime).toLocaleTimeString(
+                "ru-RU",
+                {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                },
+              )}{" "}
+              -{" "}
+              {new Date(reservationOnTime.endTime).toLocaleTimeString("ru-RU", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </Text>
+          </Group>
+        )}
       </Box>
     </Box>
   );
@@ -148,6 +198,7 @@ function GridCell({ col, row }: { col: number; row: number }) {
 }
 
 export default function GridTablePanel({
+  reservationsData,
   typePanel,
   selectedId,
   setSelectedId,
@@ -155,6 +206,7 @@ export default function GridTablePanel({
   handleRotate,
   handleDelete,
 }: {
+  reservationsData?: IReservation[];
   typePanel: "View" | "Edit";
   selectedId: string | null;
   setSelectedId: (el: string | null) => void;
@@ -206,6 +258,10 @@ export default function GridTablePanel({
         {/* Размещённые объекты */}
         {items.map((item) => (
           <DraggablePlacedFloorItem
+            reservationOnTime={reservationsData?.find(
+              (res) =>
+                res.tableId === item.tableId && res.status !== "CANCELLED",
+            )}
             typeItem={typePanel}
             key={item.clientId}
             item={item}
