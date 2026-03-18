@@ -17,6 +17,11 @@ export const orderApi = baseApi.injectEndpoints({
       providesTags: [{ type: "OrderArchive", id: "LIST" }],
     }),
 
+    orderReady: build.query<IOrderCookingResponse[], void>({
+      query: () => "/orders/ready",
+      providesTags: [{ type: "OrderReady", id: "LIST" }],
+    }),
+
     createOrder: build.mutation<void, ICreateOrder>({
       query: (body) => ({
         url: "/orders",
@@ -42,6 +47,8 @@ export const orderApi = baseApi.injectEndpoints({
         { type: "Order", id: "LIST" },
         { type: "OrderCooking", id: "LIST" },
         { type: "OrderArchive", id: "LIST" },
+        { type: "OrderReady", id: "LIST" },
+        { type: "Reservations", id: "LIST" },
       ],
     }),
   }),
@@ -50,6 +57,7 @@ export const orderApi = baseApi.injectEndpoints({
 export const {
   useOrderCookingQuery,
   useOrderArchiveQuery,
+  useOrderReadyQuery,
   useUpdateOrderItemStatusMutation,
   useCreateOrderMutation,
 } = orderApi;

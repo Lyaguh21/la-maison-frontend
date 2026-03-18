@@ -1,6 +1,7 @@
 export {
   useOrderCookingQuery,
   useOrderArchiveQuery,
+  useOrderReadyQuery,
   useUpdateOrderItemStatusMutation,
   useCreateOrderMutation,
 } from "./api/orderApi";

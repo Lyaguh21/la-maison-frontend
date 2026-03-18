@@ -15,6 +15,7 @@ export const baseApi = createApi({
     "Waiters",
     "OrderCooking",
     "OrderArchive",
+    "OrderReady",
     "Order",
     "Table",
   ],
