@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { selectUser } from "@/entities/user/model/userSelectors";
 import { userLogout } from "@/entities/user";
 import { useLogoutMutation } from "@/entities/auth";
+import { baseApi } from "@/shared/api";
 import classes from "./classes/Header.module.css";
 
 const linkEmployee = [
@@ -36,6 +37,18 @@ export default function Header() {
 
   const [logout] = useLogoutMutation();
   const user = useAppSelector(selectUser);
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+    } catch {
+      // Очищаем клиентское состояние даже если запрос logout не удался.
+    } finally {
+      dispatch(baseApi.util.resetApiState());
+      dispatch(userLogout());
+      navigate("/login");
+    }
+  };
 
   const links = [
     { label: "Главная", path: "/" },
@@ -136,7 +149,7 @@ export default function Header() {
                   </Menu.Item>
                   <Menu.Item
                     leftSection={<IconLogout size={18} />}
-                    onClick={() => dispatch(userLogout(), logout())}
+                    onClick={handleLogout}
                     c="red.6"
                   >
                     Выйти

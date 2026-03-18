@@ -17,6 +17,7 @@ import {
   Paper,
 } from "@mantine/core";
 import { useLoginMutation } from "@/entities/auth";
+import LoginHelper from "../components/LoginHelper";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -147,6 +148,7 @@ export default function Login() {
           </Text>
         </Stack>
       </Paper>
+      <LoginHelper form={form} />
     </Box>
   );
 }

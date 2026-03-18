@@ -13,4 +13,6 @@ export {
   useGetAllReservationsOnDayQuery,
   useUpdateStatusReservationMutation,
   useUpdateReservationMutation,
+  useGetUserReservationQuery,
+  useGetUserArchiveReservationQuery,
 } from "./api/reservationApi";

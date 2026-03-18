@@ -75,6 +75,7 @@ export default function Reservations() {
                 )}
                 {nowReservations?.map((reservation) => (
                   <ReservationCard
+                    type="waiter-card"
                     reservation={reservation}
                     key={reservation.id}
                   />

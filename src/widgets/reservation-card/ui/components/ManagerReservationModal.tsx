@@ -7,9 +7,11 @@ import { Modal, Stack, Button } from "@mantine/core";
 import { IconPlus, IconCash, IconCheck } from "@tabler/icons-react";
 
 export default function ManagerReservationModal({
+  type,
   stack,
   reservation,
 }: {
+  type: "profile-card" | "waiter-card";
   stack: any;
   reservation: IReservation;
 }) {
@@ -45,8 +47,10 @@ export default function ManagerReservationModal({
         >
           Добавить заказ
         </Button>
+
         <Button
           onClick={handleChangeStatus}
+          disabled={reservation.status === "PAID" && type === "profile-card"}
           leftSection={
             reservation.status === "SEATED" ? (
               <IconCash size={16} />
@@ -58,7 +62,9 @@ export default function ManagerReservationModal({
         >
           {reservation.status === "SEATED"
             ? "Оплатить заказ"
-            : "Завершить бронь"}
+            : type === "profile-card"
+              ? "Оплачено"
+              : "Завершить бронь"}
         </Button>
       </Stack>
     </Modal>

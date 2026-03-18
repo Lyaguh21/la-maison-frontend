@@ -32,6 +32,11 @@ export const authApi = baseApi.injectEndpoints({
         url: "/auth/logout",
         method: "POST",
       }),
+      invalidatesTags: [
+        { type: "User" },
+        { type: "MyReservations", id: "LIST" },
+        { type: "MyArchiveReservations", id: "LIST" },
+      ],
     }),
 
     status: build.query<IStatusResponse, void>({

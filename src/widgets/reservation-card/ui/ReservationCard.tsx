@@ -9,7 +9,9 @@ import CreateOrderModal from "./components/CreateOrderModal";
 
 export default function ReservationCard({
   reservation,
+  type = "profile-card",
 }: {
+  type?: "profile-card" | "waiter-card";
   reservation: IReservation;
 }) {
   const stack = useModalsStack(["menu", "add-order"]);
@@ -17,7 +19,11 @@ export default function ReservationCard({
   return (
     <>
       <Modal.Stack>
-        <ManagerReservationModal stack={stack} reservation={reservation} />
+        <ManagerReservationModal
+          type={type}
+          stack={stack}
+          reservation={reservation}
+        />
         <CreateOrderModal stack={stack} reservation={reservation} />
       </Modal.Stack>
 
@@ -33,7 +39,9 @@ export default function ReservationCard({
           <MainInfoSection reservation={reservation} />
 
           <OrdersTableSection reservation={reservation} />
-          <FooterSection stack={stack} reservation={reservation} />
+          {type === "profile-card" && reservation.status === "BOOKED" ? null : (
+            <FooterSection stack={stack} reservation={reservation} />
+          )}
         </Stack>
       </Paper>
     </>

@@ -2,19 +2,18 @@ import { Box, Container, Stack, Text, Tabs } from "@mantine/core";
 import { useState } from "react";
 import ProfileForm from "./components/ProfileForm";
 import ReservationList from "./components/ReservationList";
-import { MOCK_RESERVATIONS } from "./components/mockData";
 
-const ACTIVE_STATUSES = ["BOOKED", "SEATED"];
+import {
+  useGetUserArchiveReservationQuery,
+  useGetUserReservationQuery,
+} from "@/entities/reservation";
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState<string | null>("upcoming");
+  const { data: upcomingReservations } = useGetUserReservationQuery();
+  const { data: historyReservations } = useGetUserArchiveReservationQuery();
 
-  const upcomingReservations = MOCK_RESERVATIONS.filter((r) =>
-    ACTIVE_STATUSES.includes(r.status),
-  );
-  const historyReservations = MOCK_RESERVATIONS.filter(
-    (r) => !ACTIVE_STATUSES.includes(r.status),
-  );
+  if (!upcomingReservations || !historyReservations) return 
 
   return (
     <Box py={120}>
@@ -49,12 +48,12 @@ export default function Profile() {
               >
                 <FloatingTab
                   value="upcoming"
-                  label={`Брони (${upcomingReservations.length})`}
+                  label={`Брони (${upcomingReservations?.length})`}
                   isActive={activeTab === "upcoming"}
                 />
                 <FloatingTab
                   value="history"
-                  label={`История посещений (${historyReservations.length})`}
+                  label={`История посещений (${historyReservations?.length})`}
                   isActive={activeTab === "history"}
                 />
               </Tabs.List>

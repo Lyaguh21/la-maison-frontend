@@ -4,7 +4,8 @@ import {
   useGetReservationsOnDayByTableQuery,
 } from "@/entities/reservation";
 import { TableSeats } from "@/entities/table";
-import { selectUser } from "@/entities/user/model/userSelectors";
+import { useGetProfileQuery } from "@/entities/user";
+
 import {
   selectOpenedReservationPanel,
   setOpenReservationPanel,
@@ -54,7 +55,7 @@ export default function ReservationPanel({
   const { showError, showSuccess } = useNotifications();
   const theme = useMantineTheme();
 
-  const user = useAppSelector(selectUser);
+  const { data: user } = useGetProfileQuery();
   const { data: reservationOnTable } = useGetReservationsOnDayByTableQuery({
     day: dateReservation!,
     tableId: selectedItem?.tableId!,

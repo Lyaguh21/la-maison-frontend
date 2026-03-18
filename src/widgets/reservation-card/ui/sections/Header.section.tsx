@@ -3,7 +3,7 @@ import {
   ReservationStatusTranslate,
 } from "@/entities/reservation";
 import { Group, ThemeIcon, Title, Badge, Text } from "@mantine/core";
-import { IconTable } from "@tabler/icons-react";
+import { IconNotes } from "@tabler/icons-react";
 
 export default function HeaderSection({
   reservation,
@@ -14,7 +14,7 @@ export default function HeaderSection({
     <Group justify="space-between" align="flex-start">
       <Group align="flex-start">
         <ThemeIcon size={48} radius="md" variant="light">
-          <IconTable size={22} />
+          <IconNotes size={22} />
         </ThemeIcon>
 
         <div>

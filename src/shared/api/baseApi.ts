@@ -18,6 +18,8 @@ export const baseApi = createApi({
     "OrderReady",
     "Order",
     "Table",
+    "MyArchiveReservations",
+    "MyReservations",
   ],
   endpoints: () => ({}),
 });

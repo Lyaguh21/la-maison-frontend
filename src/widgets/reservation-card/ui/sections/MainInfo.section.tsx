@@ -1,6 +1,12 @@
 import { IReservation } from "@/entities/reservation";
 import { Stack, Group, ThemeIcon, Text } from "@mantine/core";
-import { IconClock, IconUser, IconPhone, IconUsers } from "@tabler/icons-react";
+import {
+  IconClock,
+  IconUser,
+  IconPhone,
+  IconUsers,
+  IconCalendarWeek,
+} from "@tabler/icons-react";
 
 const fmt = (d?: string | null) =>
   d
@@ -20,11 +26,27 @@ export default function MainInfoSection({
       <Group gap="md">
         <Group gap="xs">
           <ThemeIcon radius="xl" size="lg" variant="light">
-            <IconClock size={16} />
+            <IconCalendarWeek size={16} />
           </ThemeIcon>
           <div>
             <Text size="xs" color="dimmed">
-              Запланировано
+              Дата
+            </Text>
+            <Text size="sm">
+              {new Date(reservation.startTime).toLocaleDateString("ru-RU", {
+                day: "2-digit",
+                month: "long",
+              })}
+            </Text>
+          </div>
+        </Group>
+        <Group gap="xs">
+          <ThemeIcon radius="xl" size="lg" variant="light">
+            <IconClock size={16} />
+          </ThemeIcon>
+          <div>
+            <Text size="xs" c="dimmed">
+              Запланированное время
             </Text>
             <Text size="sm">
               {fmt(reservation.startTime)} — {fmt(reservation.endTime)}

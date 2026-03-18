@@ -17,16 +17,23 @@ export default function FooterSection({
           <Text size="xs" color="dimmed">
             Сумма заказа
           </Text>
-          <Text size="sm">{reservation.totalPrice?.toFixed(2)} ₽</Text>
+          <Text size="sm">
+            {reservation.order
+              ?.reduce((sum, item) => sum + item.totalPriceOrder, 0)
+              ?.toFixed(2) ?? 0}{" "}
+            ₽
+          </Text>
         </div>
-        <ActionIcon
-          size="lg"
-          variant="light"
-          onClick={() => stack.open("menu")}
-          title="Действия"
-        >
-          <IconSettings />
-        </ActionIcon>
+        {["SEATED", "PAID"].includes(reservation.status) ? (
+          <ActionIcon
+            size="lg"
+            variant="light"
+            onClick={() => stack.open("menu")}
+            title="Действия"
+          >
+            <IconSettings />
+          </ActionIcon>
+        ) : null}
       </Group>
     </>
   );

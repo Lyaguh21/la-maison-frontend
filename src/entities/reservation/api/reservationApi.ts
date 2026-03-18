@@ -15,7 +15,10 @@ export const reservationsApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: [{ type: "Reservations" as const, id: "LIST" }],
+      invalidatesTags: [
+        { type: "Reservations" as const, id: "LIST" },
+        { type: "MyReservations", id: "LIST" },
+      ],
     }),
 
     getAllReservationsOnDay: build.query<
@@ -59,7 +62,11 @@ export const reservationsApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: { status },
       }),
-      invalidatesTags: [{ type: "Reservations" as const, id: "LIST" }],
+      invalidatesTags: [
+        { type: "Reservations" as const, id: "LIST" },
+        { type: "MyReservations", id: "LIST" },
+        { type: "MyArchiveReservations", id: "LIST" },
+      ],
     }),
 
     updateReservation: build.mutation<
@@ -71,7 +78,21 @@ export const reservationsApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: [{ type: "Reservations" as const, id: "LIST" }],
+      invalidatesTags: [
+        { type: "Reservations" as const, id: "LIST" },
+        { type: "MyReservations", id: "LIST" },
+        { type: "MyArchiveReservations", id: "LIST" },
+      ],
+    }),
+
+    getUserReservation: build.query<IReservation[], void>({
+      query: () => "/reservation/my",
+      providesTags: [{ type: "MyReservations", id: "LIST" }],
+    }),
+
+    getUserArchiveReservation: build.query<IReservation[], void>({
+      query: () => "/reservation/my/archive",
+      providesTags: [{ type: "MyArchiveReservations", id: "LIST" }],
     }),
   }),
 });
@@ -83,4 +104,6 @@ export const {
   useCreateReservationMutation,
   useGetAllReservationsOnDayQuery,
   useUpdateStatusReservationMutation,
+  useGetUserReservationQuery,
+  useGetUserArchiveReservationQuery,
 } = reservationsApi;
