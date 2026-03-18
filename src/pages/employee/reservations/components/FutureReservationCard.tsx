@@ -33,7 +33,7 @@ export default function FutureReservationCard({
 
   return (
     <Paper
-      mih={274.5}
+      mih={297}
       radius="md"
       withBorder
       shadow="sm"

@@ -2,6 +2,7 @@ export {
   useOrderCookingQuery,
   useOrderArchiveQuery,
   useUpdateOrderItemStatusMutation,
+  useCreateOrderMutation,
 } from "./api/orderApi";
 
 export type {

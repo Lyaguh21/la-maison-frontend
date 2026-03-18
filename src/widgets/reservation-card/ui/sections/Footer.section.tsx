@@ -4,10 +4,10 @@ import { IconSettings } from "@tabler/icons-react";
 
 export default function FooterSection({
   reservation,
-  open,
+  stack,
 }: {
   reservation: IReservation;
-  open: () => void;
+  stack: any;
 }) {
   return (
     <>
@@ -19,7 +19,12 @@ export default function FooterSection({
           </Text>
           <Text size="sm">{reservation.totalPrice?.toFixed(2)} ₽</Text>
         </div>
-        <ActionIcon size="lg" variant="light" onClick={open} title="Действия">
+        <ActionIcon
+          size="lg"
+          variant="light"
+          onClick={() => stack.open("menu")}
+          title="Действия"
+        >
           <IconSettings />
         </ActionIcon>
       </Group>

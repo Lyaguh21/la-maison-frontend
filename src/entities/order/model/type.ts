@@ -44,3 +44,8 @@ export interface IOrderCookingResponse {
 export interface IUpdateOrderItemStatus {
   status: IOrderStatus;
 }
+
+export interface ICreateOrder {
+  reservationId: number;
+  orderItems: { dishId: number; quantity: number; comment?: string }[];
+}

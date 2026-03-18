@@ -1,6 +1,6 @@
 import { IReservation } from "@/entities/reservation";
 import { Stack, Group, ThemeIcon, Text } from "@mantine/core";
-import { IconClock, IconUser, IconPhone } from "@tabler/icons-react";
+import { IconClock, IconUser, IconPhone, IconUsers } from "@tabler/icons-react";
 
 const fmt = (d?: string | null) =>
   d
@@ -72,7 +72,7 @@ export default function MainInfoSection({
         </Group>
         <Group gap="xs">
           <ThemeIcon radius="xl" size="lg" variant="light">
-            <IconPhone size={16} />
+            <IconUsers size={16} />
           </ThemeIcon>
           <div>
             <Text size="xs" color="dimmed">
@@ -82,7 +82,17 @@ export default function MainInfoSection({
           </div>
         </Group>
 
-        <Group gap="xs"></Group>
+        <Group gap="xs">
+          <ThemeIcon radius="xl" size="lg" variant="light">
+            <IconUser size={16} />
+          </ThemeIcon>
+          <div>
+            <Text size="xs" color="dimmed">
+              Номер официанта
+            </Text>
+            <Text size="sm">{reservation.waiterId ?? "—"}</Text>
+          </div>
+        </Group>
       </Group>
     </Stack>
   );

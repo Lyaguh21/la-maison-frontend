@@ -7,15 +7,14 @@ import { Modal, Stack, Button } from "@mantine/core";
 import { IconPlus, IconCash, IconCheck } from "@tabler/icons-react";
 
 export default function ManagerReservationModal({
-  opened,
-  close,
+  stack,
   reservation,
 }: {
-  opened: boolean;
-  close: () => void;
+  stack: any;
   reservation: IReservation;
 }) {
   const { showError, showSuccess } = useNotifications();
+
   const [updateStatus] = useUpdateStatusReservationMutation();
 
   const handleChangeStatus = async () => {
@@ -32,14 +31,18 @@ export default function ManagerReservationModal({
     } catch (e) {
       showError("Ошибка при обновлении статуса бронирования");
     } finally {
-      close();
+      stack.closeAll();
     }
   };
 
   return (
-    <Modal opened={opened} onClose={close} title="Управление бронью">
+    <Modal {...stack.register("menu")} title="Управление бронью">
       <Stack>
-        <Button leftSection={<IconPlus size={16} />} variant="default">
+        <Button
+          onClick={() => stack.open("add-order")}
+          leftSection={<IconPlus size={16} />}
+          variant="default"
+        >
           Добавить заказ
         </Button>
         <Button

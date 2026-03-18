@@ -1,5 +1,9 @@
 import { baseApi } from "@/shared/api";
-import { IOrderCookingResponse, IUpdateOrderItemStatus } from "../model/type";
+import {
+  ICreateOrder,
+  IOrderCookingResponse,
+  IUpdateOrderItemStatus,
+} from "../model/type";
 
 export const orderApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -11,6 +15,18 @@ export const orderApi = baseApi.injectEndpoints({
     orderArchive: build.query<IOrderCookingResponse[], void>({
       query: () => "/orders/archive",
       providesTags: [{ type: "OrderArchive", id: "LIST" }],
+    }),
+
+    createOrder: build.mutation<void, ICreateOrder>({
+      query: (body) => ({
+        url: "/orders",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [
+        { type: "OrderCooking", id: "LIST" },
+        { type: "Reservations", id: "LIST" },
+      ],
     }),
 
     updateOrderItemStatus: build.mutation<
@@ -35,4 +51,5 @@ export const {
   useOrderCookingQuery,
   useOrderArchiveQuery,
   useUpdateOrderItemStatusMutation,
+  useCreateOrderMutation,
 } = orderApi;
