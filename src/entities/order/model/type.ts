@@ -4,6 +4,16 @@ import { IUserState } from "@/entities/user";
 
 type IOrderStatus = "COOKING" | "READY" | "SERVED";
 
+export interface IOrder {
+  id: number;
+  reservationId: number;
+  totalPriceOrder: number;
+  createdAt: string;
+  updatedAt: string;
+  finishedAt: string | null;
+  orderItems: IOrderItem[];
+}
+
 export interface IOrderItem {
   id: number;
   orderId: number;

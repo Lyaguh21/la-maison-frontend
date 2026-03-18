@@ -1,3 +1,5 @@
+import { IOrder } from "@/entities/order";
+
 export type IReservationStatus =
   | "BOOKED"
   | "SEATED"
@@ -32,6 +34,7 @@ export interface IReservation {
   createdAt: string;
   updatedAt: string;
   totalPrice: number;
+  order?: IOrder[];
 }
 
 export interface IReservationRangeQuery {

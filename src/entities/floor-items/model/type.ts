@@ -1,5 +1,7 @@
+import { TableType } from "@/entities/table";
+
 export type FloorItemType = "TABLE" | "WC" | "BAR" | "EXIT";
-export type TableType = "TWO" | "FOUR" | "SIX";
+
 export type FloorItemTemplateId = TableType | Exclude<FloorItemType, "TABLE">;
 export type FloorItemRotation = 0 | 90 | 180 | 270;
 

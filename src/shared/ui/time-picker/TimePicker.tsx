@@ -30,7 +30,7 @@ export default function TimePicker({
           data={getTimeRange({
             startTime: "10:00",
             endTime: "23:00",
-            interval: "00:30",
+            interval: "00:15",
           })}
           simpleGridProps={{
             type: "container",
@@ -39,7 +39,10 @@ export default function TimePicker({
           }}
           withSeconds={false}
           value={value}
-          onChange={setValue}
+          onChange={(time) => {
+            setValue(time);
+            close();
+          }}
         />
       </Modal>
     </>

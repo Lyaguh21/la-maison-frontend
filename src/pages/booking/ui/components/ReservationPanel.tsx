@@ -3,6 +3,7 @@ import {
   useCreateReservationMutation,
   useGetReservationsOnDayByTableQuery,
 } from "@/entities/reservation";
+import { TableSeats } from "@/entities/table";
 import { selectUser } from "@/entities/user/model/userSelectors";
 import {
   selectOpenedReservationPanel,
@@ -33,12 +34,6 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import { useState } from "react";
-
-const seats = {
-  DUO: "2",
-  FOUR: "4",
-  SIX: "6",
-};
 
 export default function ReservationPanel({
   selectedItem,
@@ -118,7 +113,7 @@ export default function ReservationPanel({
             <Badge size="md" variant="transparent" c={theme.colors.dark[2]}>
               <Group gap={4}>
                 <IconUsers size={16} /> мест:{" "}
-                {seats[selectedItem.tableType as keyof typeof seats]}
+                {TableSeats[selectedItem.tableType as keyof typeof TableSeats]}
               </Group>
             </Badge>
           </Group>
