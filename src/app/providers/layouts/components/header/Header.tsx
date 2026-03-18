@@ -69,8 +69,8 @@ export default function Header() {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        backgroundColor: "white",
-        borderBottom: "1px solid var(--mantine-color-gray-2)",
+        backgroundColor: "var(--mantine-color-body)",
+        borderBottom: "1px solid var(--mantine-color-default-border)",
       }}
     >
       <ScrollProgressBar />
@@ -91,7 +91,7 @@ export default function Header() {
                     <Text
                       fz="sm"
                       fw={500}
-                      c="dark.7"
+                      c="var(--mantine-color-text)"
                       style={{
                         letterSpacing: "2px",
                         textTransform: "uppercase",
@@ -120,7 +120,7 @@ export default function Header() {
                       <Avatar radius="xl" size="sm" color="burgundy.6">
                         <IconUser size={16} />
                       </Avatar>
-                      <Text fz="sm" fw={500} c="dark.6">
+                      <Text fz="sm" fw={500} c="dimmed">
                         {user?.email}
                       </Text>
                     </Group>
@@ -162,7 +162,11 @@ export default function Header() {
                 color="burgundy.6"
                 radius={0}
                 size="sm"
-                style={{ letterSpacing: "1px", textTransform: "uppercase" }}
+                style={{
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                  borderColor: "var(--mantine-color-default-border)",
+                }}
                 onClick={() => navigate("/login")}
               >
                 Войти

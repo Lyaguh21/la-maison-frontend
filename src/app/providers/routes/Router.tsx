@@ -15,9 +15,9 @@ import {
   Users,
 } from "@/pages/employee";
 import { RoleGuard } from "../guards/RoleGuard";
-import { Error404 } from "@/pages/Errors/Error404";
-import { Menu } from "@/pages/Menu";
-import { Landing } from "@/pages/Landing";
+import { Error404 } from "@/pages/errors/Error404";
+import { Menu } from "@/pages/menu";
+import { Landing } from "@/pages/landing";
 
 const router = createBrowserRouter([
   {

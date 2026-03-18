@@ -65,7 +65,7 @@ export default function Register() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "var(--mantine-color-gray-0)",
+        backgroundColor: "var(--mantine-color-body)",
       }}
     >
       <Paper w={500} p="lg" radius="md" shadow="md">
@@ -88,7 +88,7 @@ export default function Register() {
 
           <Text
             fz="sm"
-            c="dark.4"
+            c="dimmed"
             ta="center"
             style={{ letterSpacing: "1px", textTransform: "uppercase" }}
           >
@@ -109,7 +109,7 @@ export default function Register() {
                     fontSize: 11,
                     marginBottom: 6,
                   },
-                  input: { borderColor: "var(--mantine-color-gray-4)" },
+                  input: { borderColor: "var(--mantine-color-default-border)" },
                 }}
                 {...form.getInputProps("email")}
               />
@@ -125,7 +125,7 @@ export default function Register() {
                     fontSize: 11,
                     marginBottom: 6,
                   },
-                  input: { borderColor: "var(--mantine-color-gray-4)" },
+                  input: { borderColor: "var(--mantine-color-default-border)" },
                 }}
                 {...form.getInputProps("password")}
               />
@@ -141,7 +141,7 @@ export default function Register() {
                     fontSize: 11,
                     marginBottom: 6,
                   },
-                  input: { borderColor: "var(--mantine-color-gray-4)" },
+                  input: { borderColor: "var(--mantine-color-default-border)" },
                 }}
                 {...form.getInputProps("confirmPassword")}
               />
@@ -160,7 +160,7 @@ export default function Register() {
             </Stack>
           </form>
 
-          <Text fz="sm" c="dark.4" ta="center">
+          <Text fz="sm" c="dimmed" ta="center">
             Уже есть аккаунт?{" "}
             <Anchor
               c="burgundy.6"

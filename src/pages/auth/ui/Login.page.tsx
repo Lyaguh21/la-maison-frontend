@@ -57,7 +57,7 @@ export default function Login() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "var(--mantine-color-gray-0)",
+        backgroundColor: "var(--mantine-color-body)",
       }}
     >
       <Paper w={500} p="lg" radius="md" shadow="md">
@@ -79,7 +79,7 @@ export default function Login() {
 
           <Text
             fz="sm"
-            c="dark.4"
+            c="dimmed"
             ta="center"
             style={{ letterSpacing: "1px", textTransform: "uppercase" }}
           >
@@ -100,7 +100,7 @@ export default function Login() {
                     fontSize: 11,
                     marginBottom: 6,
                   },
-                  input: { borderColor: "var(--mantine-color-gray-4)" },
+                  input: { borderColor: "var(--mantine-color-default-border)" },
                 }}
                 {...form.getInputProps("email")}
               />
@@ -116,7 +116,7 @@ export default function Login() {
                     fontSize: 11,
                     marginBottom: 6,
                   },
-                  input: { borderColor: "var(--mantine-color-gray-4)" },
+                  input: { borderColor: "var(--mantine-color-default-border)" },
                 }}
                 {...form.getInputProps("password")}
               />
@@ -135,7 +135,7 @@ export default function Login() {
             </Stack>
           </form>
 
-          <Text fz="sm" c="dark.4" ta="center">
+          <Text fz="sm" c="dimmed" ta="center">
             Нет аккаунта?{" "}
             <Anchor
               c="burgundy.6"

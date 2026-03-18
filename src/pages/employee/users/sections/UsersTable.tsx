@@ -135,7 +135,7 @@ export default function UsersTable() {
   return (
     <Paper withBorder shadow="sm" p="md" flex={1}>
       <Flex justify="space-between" wrap="wrap" align="center">
-        <Text fz="lg" fw={500} c={theme.colors.dark[2]}>
+        <Text fz="lg" fw={500} c="var(--mantine-color-text)">
           Пользователей:{" "}
           <Text span c={theme.primaryColor} fw={700}>
             {data?.meta.total || 0}

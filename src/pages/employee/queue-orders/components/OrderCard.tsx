@@ -120,7 +120,7 @@ export default function OrderCard({ data }: { data: IOrderCookingResponse }) {
         }
       >
         {data.finishedAt ? archiveCookingTime : cookingTime}
-        <Text ml={4} span fz="lg" c={theme.colors.dark[3]} fw={600}>
+        <Text ml={4} span fz="lg" c="dimmed" fw={600}>
           мин
         </Text>
       </Text>
@@ -130,7 +130,7 @@ export default function OrderCard({ data }: { data: IOrderCookingResponse }) {
           Заказ №{data.id}. Стол №{data.reservation.tableId}
         </Text>
 
-        <Text fz="sm" c={theme.colors.dark[3]} fw={600}>
+        <Text fz="sm" c="dimmed" fw={600}>
           {new Date(data.createdAt).toLocaleTimeString("ru-RU", {
             hour: "2-digit",
             minute: "2-digit",

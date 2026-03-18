@@ -10,7 +10,7 @@ export default function About() {
           ff="'Playfair Display', serif"
           fw={400}
           fz={72}
-          c="black"
+          c="var(--mantine-color-text)"
           ta="center"
           style={{ letterSpacing: "8px", textTransform: "uppercase" }}
         >

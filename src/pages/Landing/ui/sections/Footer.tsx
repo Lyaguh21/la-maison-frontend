@@ -98,7 +98,7 @@ export default function Footer() {
 
         <Divider my="xl" color="dark.6" />
 
-        <Text fz="xs" c="dark.4" ta="center">
+        <Text fz="xs" c="gray.5" ta="center">
           © 2026 La Maison. Все права защищены.
         </Text>
       </Container>

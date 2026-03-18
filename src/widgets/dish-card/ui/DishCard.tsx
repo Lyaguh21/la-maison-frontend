@@ -59,11 +59,11 @@ export default function dishCard({
               ff="Playfair Display"
               fw={600}
               fz={visible === "grid" ? "xl" : { base: "xl", sm: "32" }}
-              c="dark.8"
+              c="var(--mantine-color-text)"
             >
               {dish.name}
             </Text>
-            <Text fz="sm" c="dark.4" lh={1.6}>
+            <Text fz="sm" c="dimmed" lh={1.6}>
               {dish.description}
             </Text>
             <Flex wrap="wrap" gap={4} mt={8}>

@@ -72,7 +72,7 @@ export default function ChefsChoiceSection() {
             ff="'Playfair Display', serif"
             fw={400}
             fz={36}
-            c="dark.8"
+            c="var(--mantine-color-text)"
             ta="center"
             style={{ letterSpacing: "3px", textTransform: "uppercase" }}
           >

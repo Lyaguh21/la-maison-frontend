@@ -15,3 +15,8 @@ body::-webkit-scrollbar {
 html {
   scroll-behavior: smooth;
 }
+
+body {
+  background-color: var(--mantine-color-body);
+  color: var(--mantine-color-text);
+}

@@ -1,6 +1,8 @@
 import { Center, Stack, Text, Button, Container, Box } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
+  const navigate = useNavigate();
   return (
     <Box
       py={150}
@@ -57,6 +59,7 @@ export default function HeroSection() {
               mt="md"
               px={40}
               style={{ letterSpacing: "2px", textTransform: "uppercase" }}
+              onClick={() => navigate("/booking")}
             >
               Забронировать стол
             </Button>

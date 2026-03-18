@@ -13,7 +13,7 @@ export default function Profile() {
   const { data: upcomingReservations } = useGetUserReservationQuery();
   const { data: historyReservations } = useGetUserArchiveReservationQuery();
 
-  if (!upcomingReservations || !historyReservations) return 
+  if (!upcomingReservations || !historyReservations) return;
 
   return (
     <Box py={120}>
@@ -23,7 +23,7 @@ export default function Profile() {
             ff="'Playfair Display', serif"
             fw={400}
             fz={48}
-            c="black"
+            c="var(--mantine-color-text)"
             ta="center"
             style={{ letterSpacing: "6px", textTransform: "uppercase" }}
           >
@@ -43,7 +43,7 @@ export default function Profile() {
                 grow
                 style={{
                   position: "relative",
-                  borderBottom: "2px solid var(--mantine-color-gray-2)",
+                  borderBottom: "2px solid var(--mantine-color-default-border)",
                 }}
               >
                 <FloatingTab
@@ -98,7 +98,7 @@ function FloatingTab({
         fontWeight: isActive ? 600 : 400,
         color: isActive
           ? "var(--mantine-color-burgundy-6)"
-          : "var(--mantine-color-gray-6)",
+          : "var(--mantine-color-dimmed)",
         paddingBottom: 12,
         transition: "color 0.2s ease",
         border: "none",

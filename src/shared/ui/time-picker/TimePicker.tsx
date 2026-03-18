@@ -1,4 +1,4 @@
-import { Button, Text, Stack, useMantineTheme, Modal } from "@mantine/core";
+import { Button, Text, Stack, Modal } from "@mantine/core";
 import { getTimeRange, TimeGrid } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 
@@ -11,13 +11,12 @@ export default function TimePicker({
   value: null | string;
   setValue: (value: null | string) => void;
 }) {
-  const theme = useMantineTheme();
   const [opened, { open, close }] = useDisclosure();
 
   return (
     <>
       <Stack gap={0}>
-        <Text c={theme.colors.dark[3]} fz="xs" fw={500}>
+        <Text c="dimmed" fz="xs" fw={500}>
           {label}
         </Text>
         <Button onClick={open} w={180}>

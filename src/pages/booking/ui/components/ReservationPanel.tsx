@@ -92,7 +92,7 @@ export default function ReservationPanel({
       right={0}
       style={{
         borderLeft: "1px solid",
-        borderColor: theme.colors.gray[3],
+        borderColor: "var(--mantine-color-default-border)",
         zIndex: 100,
       }}
     >
@@ -111,7 +111,7 @@ export default function ReservationPanel({
           </Title>
           <Group gap="2">
             <Badge size="md">Стол №{selectedItem.number}</Badge>
-            <Badge size="md" variant="transparent" c={theme.colors.dark[2]}>
+            <Badge size="md" variant="transparent" c="dimmed">
               <Group gap={4}>
                 <IconUsers size={16} /> мест:{" "}
                 {TableSeats[selectedItem.tableType as keyof typeof TableSeats]}
@@ -160,8 +160,8 @@ export default function ReservationPanel({
           />
 
           <Group gap={4}>
-            <IconCalendarWeek color={theme.colors.dark[3]} />
-            <Text fw={500} c={theme.colors.dark[3]}>
+            <IconCalendarWeek color="var(--mantine-color-dimmed)" />
+            <Text fw={500} c="dimmed">
               Дата брони:{" "}
               <Text span c={theme.primaryColor} fw={700}>
                 {new Date(dateReservation!).toLocaleDateString("ru-RU", {
@@ -172,8 +172,8 @@ export default function ReservationPanel({
             </Text>
           </Group>
           <Group gap={4}>
-            <IconClockHour1 color={theme.colors.dark[3]} />
-            <Text fw={500} c={theme.colors.dark[3]}>
+            <IconClockHour1 color="var(--mantine-color-dimmed)" />
+            <Text fw={500} c="dimmed">
               Время начала:{" "}
               <Text span c={theme.primaryColor} fw={700}>
                 {startReservationTime?.substring(0, 5)}
@@ -181,8 +181,8 @@ export default function ReservationPanel({
             </Text>
           </Group>
           <Group gap={4}>
-            <IconClockHour2 color={theme.colors.dark[3]} />
-            <Text fw={500} c={theme.colors.dark[3]}>
+            <IconClockHour2 color="var(--mantine-color-dimmed)" />
+            <Text fw={500} c="dimmed">
               Время конца:{" "}
               <Text span c={theme.primaryColor} fw={700}>
                 {endReservationTime?.substring(0, 5)}

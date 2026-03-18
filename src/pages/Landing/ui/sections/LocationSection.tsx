@@ -3,14 +3,14 @@ import { IconPhone, IconMail, IconClock } from "@tabler/icons-react";
 
 export default function LocationSection() {
   return (
-    <Box py={100} bg="gray.0">
+    <Box py={100} bg="var(--mantine-color-default-hover)">
       <Container size="lg">
         <Stack align="center" gap="xl" mb="xl">
           <Text
             ff="'Playfair Display', serif"
             fw={400}
             fz={36}
-            c="dark.8"
+            c="var(--mantine-color-text)"
             ta="center"
             style={{ letterSpacing: "3px", textTransform: "uppercase" }}
           >
@@ -36,11 +36,16 @@ export default function LocationSection() {
 
           <Grid.Col span={{ base: 12, md: 5 }}>
             <Stack gap="lg" justify="center" h="100%">
-              <Text ff="'Playfair Display', serif" fz="xl" fw={500} c="dark.8">
+              <Text
+                ff="'Playfair Display', serif"
+                fz="xl"
+                fw={500}
+                c="var(--mantine-color-text)"
+              >
                 La Maison
               </Text>
 
-              <Text fz="sm" c="dark.4" lh={1.8}>
+              <Text fz="sm" c="dimmed" lh={1.8}>
                 ул. Примерная, 42
                 <br />
                 Москва, Россия, 101000
@@ -52,14 +57,14 @@ export default function LocationSection() {
                     size={16}
                     color="var(--mantine-color-burgundy-6)"
                   />
-                  <Text fz="sm" c="dark.5">
+                  <Text fz="sm" c="dimmed">
                     +7 (495) 123-45-67
                   </Text>
                 </Group>
 
                 <Group gap="xs">
                   <IconMail size={16} color="var(--mantine-color-burgundy-6)" />
-                  <Text fz="sm" c="dark.5">
+                  <Text fz="sm" c="dimmed">
                     info@lamaison.ru
                   </Text>
                 </Group>
@@ -69,7 +74,7 @@ export default function LocationSection() {
                     size={16}
                     color="var(--mantine-color-burgundy-6)"
                   />
-                  <Text fz="sm" c="dark.5">
+                  <Text fz="sm" c="dimmed">
                     Пн — Вс: 12:00 — 23:00
                   </Text>
                 </Group>
