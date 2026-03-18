@@ -24,8 +24,14 @@ export default function DishListSection() {
   const visible = searchParams.get("visible") || "grid";
   return (
     <Stack flex={1}>
-      <Group gap="md">
-        <Paper withBorder p="sm" py={"xs"} radius="sm">
+      <Group gap="md" mb="md">
+        <Paper
+          withBorder
+          p="sm"
+          py={"xs"}
+          radius="sm"
+          flex={{ base: 1, sm: "initial" }}
+        >
           <Text c={theme.colors.gray[6]}>
             Всего страниц:{" "}
             <Text fw={700} span c={theme.primaryColor}>
@@ -33,7 +39,13 @@ export default function DishListSection() {
             </Text>
           </Text>
         </Paper>
-        <Paper withBorder p="sm" py={"xs"} radius="sm">
+        <Paper
+          withBorder
+          p="sm"
+          py={"xs"}
+          radius="sm"
+          flex={{ base: 1, sm: "initial" }}
+        >
           <Text c={theme.colors.gray[6]}>
             Всего блюд:{" "}
             <Text fw={700} span c={theme.primaryColor}>

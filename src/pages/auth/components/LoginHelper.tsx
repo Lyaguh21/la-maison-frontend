@@ -27,6 +27,7 @@ const params = [
 export default function LoginHelper({ form }: { form: any }) {
   return (
     <Blockquote
+      p="md"
       icon={<IconCopy />}
       title="Данные для входа"
       pos="fixed"

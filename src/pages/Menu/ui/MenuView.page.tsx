@@ -1,4 +1,5 @@
 import { Box, Flex, Text, Stack } from "@mantine/core";
+
 import DishListSection from "./sections/DishListSection";
 import FiltersSection from "./sections/FiltersSection";
 
@@ -18,7 +19,11 @@ export default function About() {
         </Text>
         <Box w={60} h={2} bg="gold.4" />
 
-        <Flex direction={{ base: "column", lg: "row" }} w="80vw" gap="md">
+        <Flex
+          direction={{ base: "column", lg: "row" }}
+          w={{ base: "95vw", md: "80vw" }}
+          gap="md"
+        >
           <FiltersSection />
           <DishListSection />
         </Flex>

@@ -77,7 +77,7 @@ export default function Header() {
 
       <Container size="xl">
         <Group justify="space-between" align="center">
-          <Image src="/icons/MiniLogo.png" w={200} />
+          <Image src="/icons/MiniLogo.png" w={{ base: 100, sm: 200 }} />
 
           <Group gap={30} justify="center" className={classes.headerLinks}>
             {links
