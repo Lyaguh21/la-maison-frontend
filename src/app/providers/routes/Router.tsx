@@ -15,7 +15,7 @@ import {
   Users,
 } from "@/pages/employee";
 import { RoleGuard } from "../guards/RoleGuard";
-import { Error404 } from "@/pages/errors/Error404/index";
+import Error404 from "@/pages/errors/Error404/Error404.page";
 import { Menu } from "@/pages/menu";
 import { Landing } from "@/pages/landing";
 
