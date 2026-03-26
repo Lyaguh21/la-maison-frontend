@@ -1,23 +1,24 @@
-import { Login, Register } from "@/pages/auth";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { Booking } from "@/pages/booking";
-import { Profile } from "@/pages/profile";
 import LandingLayout from "../layouts/Landing.layout";
 import EmployeeLayout from "../layouts/Employee.layout";
 import {
+  Booking,
   Dashboards,
   EditFloorScheme,
+  Error404,
+  Landing,
+  Login,
+  Menu,
   Orders,
+  Profile,
   QueueOrders,
+  Register,
   ReadyDish,
   Reservations,
   Users,
-} from "@/pages/employee";
+} from "@/pages";
 import { RoleGuard } from "../guards/RoleGuard";
-import { Menu } from "@/pages/menu";
-import { Landing } from "@/pages/landing";
-import { Error404 } from "@/pages/errors/Error404";
 
 const router = createBrowserRouter([
   {
