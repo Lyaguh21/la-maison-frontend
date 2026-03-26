@@ -9,7 +9,7 @@ export {
   Reservations,
   Users,
 } from "./employee";
-export { Error404 } from "./errors";
+export { Error404 } from "./errors/Error404";
 export { Landing } from "./landing";
 export { Menu } from "./menu";
 export { Profile } from "./profile";
