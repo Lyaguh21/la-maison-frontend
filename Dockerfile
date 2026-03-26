@@ -3,12 +3,13 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --no-audit --no-fund
 
 COPY . .
 
 ARG VITE_API_URL=/api
 ENV VITE_API_URL=${VITE_API_URL}
+ENV NODE_OPTIONS=--max_old_space_size=768
 
 RUN npm run build
 
