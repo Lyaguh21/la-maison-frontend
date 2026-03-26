@@ -6,8 +6,10 @@ import type {
 } from "@reduxjs/toolkit/query";
 import { userLogout } from "@/entities/user/model/userSlice";
 
+const apiBaseUrl = import.meta.env.VITE_API_URL ?? "/api";
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3000",
+  baseUrl: apiBaseUrl,
   credentials: "include",
 });
 
